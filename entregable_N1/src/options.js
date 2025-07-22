@@ -1,7 +1,7 @@
-options = [
+const ingredients = [
     {
         "name": "Pan",
-        "max_amout_to_choose": {
+        "max_amount_to_choose": {
             "big_combo": 1,
             "normal_combo": 1,
         },
@@ -74,6 +74,14 @@ options = [
 // alert('Bienvenido a SandwitchMania\nDonde puedes armar tu sandwitch como tu quieras')
 // alert('A continuación te daremos las opciones para que armes tu sandwitch y al final veras el precio a pagar en caja.\nCOMIENZA A ARMAR TU SANDWITCH AHORA')
 
+const userSandwitch = {
+    'Pan': [],
+    'Proteina': [],
+    'Quesos': [],
+    'Agregados': [],
+    'Aderezos': [],
+}
+
 function set_combo(){
     const message = "Elije el tamaño de tu combo:\n\n1. Normal\n2. Grande\n0. Salir"
     let chCombo = prompt(message)
@@ -95,4 +103,46 @@ function set_combo(){
     return chCombo;
 }
 
-let combo = set_combo();
+let chCombo = set_combo();
+
+function get_ingredients(ingredients, chCombo){
+    
+    let all_options = [];
+    
+    ingredients.forEach((elem, index) => {
+        let ing_name = elem.name;
+        let max_n_choices = elem.max_amount_to_choose[chCombo];
+        let ing_options = [];
+        let message = "";
+
+        ing_options = Object.keys(elem.options);
+
+        for(let i = 0; i < max_n_choices; i++){
+            message = `Elegí hasta tu opción/es para "${ing_name}" (Te quedan ${max_n_choices - i}):\n\n`;
+            ing_options.forEach((ing, index) => {
+                message += `${index+1}. ${ing}\n`;
+            })
+
+            do{
+                isInputOk = false;
+                chOption = parseInt(prompt(message));
+
+                if(!isNaN(chOption) && chOption > 0 && chOption <= ing_options.length){
+                    isInputOk = true;
+                }else{
+                    alert('La opción elejida no es válida. Pruebe de vuelta');
+                }
+
+            }while(!isInputOk)
+                
+            userSandwitch[ing_name].push(ing_options[chOption-1]);
+        }
+
+        all_options.push(ing_options);
+
+    })
+
+}
+
+get_ingredients(ingredients, chCombo)
+console.log(userSandwitch)
