@@ -82,6 +82,14 @@ const userSandwitch = {
     'Aderezos': [],
 }
 
+const userSandwitchPrice = {
+    'Pan': [],
+    'Proteina': [],
+    'Quesos': [],
+    'Agregados': [],
+    'Aderezos': [],
+}
+
 function set_combo(){
     const message = "Elije el tamaño de tu combo:\n\n1. Normal\n2. Grande\n0. Salir"
     let chCombo = prompt(message)
@@ -108,14 +116,19 @@ let chCombo = set_combo();
 function get_ingredients(ingredients, chCombo){
     
     let all_options = [];
+    let finalPrice = [];
     
     ingredients.forEach((elem, index) => {
         let ing_name = elem.name;
         let max_n_choices = elem.max_amount_to_choose[chCombo];
         let ing_options = [];
+        let ing_price = [];
         let message = "";
 
-        ing_options = Object.keys(elem.options);
+        for (const [key, value] of Object.entries(elem.options)){
+            ing_options.push(key);
+            ing_price.push(value);
+        }
 
         for(let i = 0; i < max_n_choices; i++){
             message = `Elegí hasta tu opción/es para "${ing_name}" (Te quedan ${max_n_choices - i}):\n\n`;
@@ -136,13 +149,65 @@ function get_ingredients(ingredients, chCombo){
             }while(!isInputOk)
                 
             userSandwitch[ing_name].push(ing_options[chOption-1]);
+            userSandwitchPrice[ing_name].push(ing_price[chOption-1]);
         }
 
         all_options.push(ing_options);
+        finalPrice.push(ing_price)
 
     })
 
 }
 
 get_ingredients(ingredients, chCombo)
-console.log(userSandwitch)
+
+function calculate_price(userSandwitchPrice){
+    let price = 0.00
+    for (const [key, value] of Object.entries(userSandwitchPrice)){
+        price += value.reduce((acc, val) => acc += parseFloat(val))
+    }
+    return price;
+}
+
+function show_final_tab(userSandwitch, userSandwitchPrice){
+    let message = 'Por favor, controle que su orden es correcta:\n\n'
+    if(chCombo === 'normal_combo'){
+        message += 'Sandwitch común:\n'
+    }else{
+        message += 'Sandwitch big:\n'
+    }
+
+    for (const [key, val] of Object.entries(userSandwitch)){
+        message += `${key}:\n`
+        val.map(e => message += `(*)${e}\n`)
+    }
+
+    let price = calculate_price(userSandwitchPrice)
+
+    message += `Precio sin Impuestos: $${price.toFixed(2)}\n`
+    message += `IVA(21%): $${(price * 0.21).toFixed(2)}\n`
+    message += `Total a pagar: $${(price * 1.21).toFixed(2)}\n`
+    
+    message += '\nSi su orden es correcta ingrese 1, si desea volver a armar su sandwitch ingrese 2, para salir ingrese 0.'
+
+    let chOption = prompt(message);
+
+    switch(chOption){
+        
+        case '1':
+            alert('Por favor acerquece al mostrador para realizar el pago y disfrutar de su sandwitch.')
+            break;
+        case '2':
+            break;
+        case '0':
+            break;
+        default:
+            alert('La opción elejida no es válida. Pruebe de vuelta');
+            show_final_tab(userSandwitch, userSandwitchPrice);
+
+    }
+}
+
+calculate_price(userSandwitchPrice);
+
+show_final_tab(userSandwitch, userSandwitchPrice);
