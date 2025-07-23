@@ -6,11 +6,11 @@
 
 ## Descripción general
 
-En este entregable aplicamos los conceptos de variables, funciones, arrays y objetos aprendidos hasta ahora en el curso de JavaScript, para construir un simulador para un e-commerce de venta de sandwitches llamado SandwitchMania. 
+En este entregable aplicamos los conceptos de variables, funciones, arrays y objetos aprendidos hasta ahora en el curso de JavaScript, para construir un simulador de un e-commerce de venta de sandwitches llamado **SandwitchMania**. 
 
 La página de inicio contiene un diseño muy básico, con un boton que permite inicializar el simulador.
 
-Usando la función integrada de JS, prompt(), le pedimos al usuario que arme su sandwitch, mostrando en cada sección (Pan, Proteina, Quesos, Agregados y Aderezos) las opciones disponibles.
+Usando la función integrada de JS, ```prompt()```, le pedimos al usuario que arme su sandwitch, mostrando en cada sección (Pan, Proteina, Quesos, Agregados y Aderezos) las opciones disponibles.
 
 Al finalizar, se le muestra al usuario los ingredientes elegidos y el precio final. Se le permite que confirme el pedido o se le dá la opción de comenzar a elegir los ingredientes desde el comienzo.
 
@@ -20,7 +20,7 @@ Al finalizar, se le muestra al usuario los ingredientes elegidos y el precio fin
 
 * Página HTML: Consta de un título, una descripción del negocio y un boton para iniciar el simulador.
 
-* Archivo JS: Se llama options.js y se encuentra dentro de la carpeta src. Contiene toda la lógica del simulador.
+* Archivo JS: Se llama script.js y se encuentra dentro de la carpeta src. Contiene toda la lógica del simulador.
 
 ### Estructura del archivo .js
 
