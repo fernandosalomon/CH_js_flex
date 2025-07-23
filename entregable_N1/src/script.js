@@ -168,7 +168,7 @@ function buildSandwitch(chCombo){
             message += "\nQ. Salir\n"
             
             if(showFoot){
-                message += "\n(*) La opción ya se encuentra elegida. Elijela de vuelta si quieres una porción doble."
+                message += "\n(*) La opción ya se encuentra elegida. Si quieres una porción doble, volvé a elegirla."
             }
             
             let isInputOk = false;
@@ -187,7 +187,7 @@ function buildSandwitch(chCombo){
                     quitSignal = true;
                     break;
                 }else{
-                    alert('La opción elejida no es válida. Pruebe de vuelta');
+                    alert('La opción elegida no es válida. Pruebe de vuelta');
                 }
 
             }while(!isInputOk);   
@@ -227,7 +227,7 @@ function priceMenu(userSandwitch){
     let isPayOk = confirm(message);
 
     if(isPayOk){
-        alert('Por favor acerquece al mostrador para realizar el pago y disfrutar de su sandwitch.')
+        alert('Por favor, acercate al mostrador para realizar el pago y disfrutar de tu sándwich.')
         return 0;
     }else{
         return -1;
@@ -242,9 +242,9 @@ function showFinal(chCombo, userSandwitch){
 
     let message = 'Por favor, controle que su orden es correcta:\n\n'
     if(chCombo === 'normalCombo'){
-        message += 'Sandwitch Común:\n'
+        message += 'Sándwich Común:\n'
     }else{
-        message += 'Sandwitch Big:\n'
+        message += 'Sándwich Big:\n'
     }
 
     for (const [section, ings] of Object.entries(userSandwitch)){
@@ -268,8 +268,8 @@ function showFinal(chCombo, userSandwitch){
 
 function mainMenu(){
 
-    alert('Bienvenido a SandwitchMania\n\nDonde puedes armar tu sandwitch como tu quieras')
-    alert('A continuación te daremos las opciones para que armes tu sandwitch y al final veras el precio a pagar en caja.\n\nCOMIENZA A ARMAR TU SANDWITCH AHORA')
+    alert('Bienvenido a SandwichMania\n\nDonde puedes armar tu sándwich como tu quieras')
+    alert('A continuación, te daremos las opciones para que puedas armar tu sándwich y al final veras el precio a pagar en caja.\n\nCOMIENZA A ARMAR TU SÁNDWICH AHORA')
 
     let end;
 
