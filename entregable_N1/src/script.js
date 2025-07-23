@@ -26,7 +26,7 @@ const prices = {
     'Savora con miel': 70,
     'Salsa picante': 70,
     'Pesto': 80,
-}
+};
 
 const ingredients = [
     {
@@ -42,7 +42,7 @@ const ingredients = [
             'Ciabatta',
             'Salvado', 
             'Sin Gluten',
-        ]
+        ],
     },
     {
         "name": "Proteina",
@@ -56,7 +56,7 @@ const ingredients = [
             'Pollo', 
             'Atún', 
             'Pavo',
-        ]
+        ],
     },
     {
         "name": "Quesos",
@@ -99,13 +99,11 @@ const ingredients = [
             'Pesto',
         ],
     }
-]
-
-
+];
 
 // FUNCTIONS
 
-function choose_combo(){
+function chooseCombo(){
     const message = "Elije el tamaño de tu combo:\n\n1. Normal\n2. Grande\n\nQ. Salir"
     let chCombo = prompt(message)
 
@@ -119,17 +117,20 @@ function choose_combo(){
         case 'Q':
             return -1;
             break;
+        case null:
+            return -1;
+            break;
         default:
             alert('La opción elejida no es válida. Pruebe de vuelta');
-            chCombo = set_combo();
+            chCombo = chooseCombo();
     }
     
     return chCombo;
 }
 
-function build_sandwitch(chCombo){
+function buildSandwitch(chCombo){
 
-    let quit_signal = false;
+    let quitSignal = false;
     const userSandwitch = {
         'Pan': [],
         'Proteina': [],
@@ -138,35 +139,35 @@ function build_sandwitch(chCombo){
         'Aderezos': [],
     }
     
-    for (const e of ingredients){
+    for (const ing of ingredients){
 
         let message = "";
-        let max_ch = e.max_amount_to_choose[chCombo];
-        let ing_name = e.name;
+        let maxCH = ing.max_amount_to_choose[chCombo];
+        let ingName = ing.name;
 
-        for(let i = 0; i < max_ch; i++){
+        for(let i = 0; i < maxCH; i++){
 
-            let show_foot = false;
+            let showFoot = false;
 
-            message = `Elegí tu/s opcion/es de ${ing_name} (Te quedan ${max_ch - i}):\n`
+            message = `Elegí tu/s opcion/es de ${ingName} (Te quedan ${maxCH - i}):\n`
             
-            e.options.forEach((ing, idx) => {
+            ing.options.forEach((ing, idx) => {
                 message += `${idx+1}. ${ing}`;
-                if(userSandwitch[ing_name].includes(ing)){
+                if(userSandwitch[ingName].includes(ing)){
                     message += " (*)"
-                    show_foot = true
+                    showFoot = true
                 }
                 message += '\n'
             })
 
             
-            if(ing_name === 'Quesos' || ing_name === 'Aderezos' || ing_name === 'Agregados'){
-                message += `0. Sin ${ing_name}\n`;
+            if(ingName === 'Quesos' || ingName === 'Aderezos' || ingName === 'Agregados'){
+                message += `0. Sin ${ingName}\n`;
             }
 
             message += "\nQ. Salir\n"
             
-            if(show_foot){
+            if(showFoot){
                 message += "\n(*) La opción ya se encuentra elegida. Elijela de vuelta si quieres una porción doble."
             }
             
@@ -176,14 +177,14 @@ function build_sandwitch(chCombo){
             do{
                 chOption = prompt(message);
                 
-                if(!isNaN(chOption) && chOption > 0 && chOption <= e.options.length){
+                if(!isNaN(chOption) && chOption > 0 && chOption <= ing.options.length){
                     isInputOk = true;
-                    userSandwitch[ing_name].push(e.options[chOption-1]);
-                }else if(chOption === '0' && (ing_name === 'Quesos' || ing_name === 'Aderezos' || ing_name === 'Agregados')){
-                    i = max_ch;
+                    userSandwitch[ingName].push(ing.options[chOption-1]);
+                }else if(chOption === '0' && (ingName === 'Quesos' || ingName === 'Aderezos' || ingName === 'Agregados')){
+                    i = maxCH;
                     isInputOk = true;
-                }else if(chOption === 'Q'){
-                    quit_signal = true;
+                }else if(chOption === 'Q' || chOption === null){
+                    quitSignal = true;
                     break;
                 }else{
                     alert('La opción elejida no es válida. Pruebe de vuelta');
@@ -191,31 +192,31 @@ function build_sandwitch(chCombo){
 
             }while(!isInputOk);   
         }
-        if(quit_signal){break;}
+        if(quitSignal){break;}
     }
     
-    if(quit_signal){
+    if(quitSignal){
         return -1;
     }else{
         return userSandwitch;
     }
 }
 
-function calculate_price(userSandwitch){
+function calculatePrice(userSandwitch){
     let price = 0
    
-    for(const [key,value] of Object.entries(userSandwitch)){
+    for(const [section,ing] of Object.entries(userSandwitch)){
 
-        price += value.reduce((acc, val) => acc += parseFloat(prices[val]),0);
+        price += ing.reduce((acc, val) => acc += parseFloat(prices[val]),0);
     }
     
     return price;
 }
 
-function price_menu(userSandwitch){
+function priceMenu(userSandwitch){
     
     let message = "Detalle de pago:\n\n";
-    let price = calculate_price(userSandwitch);
+    let price = calculatePrice(userSandwitch);
     
     message += `Precio sin Impuestos: $${price.toFixed(2)}\n`
     message += `IVA(21%): $${(price * 0.21).toFixed(2)}\n`
@@ -233,12 +234,11 @@ function price_menu(userSandwitch){
     }
 }
 
-function show_final(chCombo, userSandwitch){
+function showFinal(chCombo, userSandwitch){
 
     if(userSandwitch === undefined){
         return -1;
     }
-
 
     let message = 'Por favor, controle que su orden es correcta:\n\n'
     if(chCombo === 'normal_combo'){
@@ -247,10 +247,10 @@ function show_final(chCombo, userSandwitch){
         message += 'Sandwitch big:\n'
     }
 
-    for (const [key, val] of Object.entries(userSandwitch)){
-        message += `${key}:\n`
-        val.map(e => message += `(*)${e}\n`)
-        if(val.length === 0){
+    for (const [section, ings] of Object.entries(userSandwitch)){
+        message += `${section}:\n`
+        ings.map(ing => message += `(*)${ing}\n`)
+        if(ings.length === 0){
             message += "(*) ---\n";
         }
     }
@@ -260,13 +260,13 @@ function show_final(chCombo, userSandwitch){
     let isOrderOk = confirm(message);
 
     if(isOrderOk){
-        return price_menu(userSandwitch)
+        return priceMenu(userSandwitch)
     }else{
         return -1;
     }
 }
 
-function main_menu(){
+function mainMenu(){
 
     alert('Bienvenido a SandwitchMania\n\nDonde puedes armar tu sandwitch como tu quieras')
     alert('A continuación te daremos las opciones para que armes tu sandwitch y al final veras el precio a pagar en caja.\n\nCOMIENZA A ARMAR TU SANDWITCH AHORA')
@@ -275,22 +275,22 @@ function main_menu(){
 
     do{
 
-        let chCombo = choose_combo();
+        let chCombo = chooseCombo();
 
         if(chCombo === -1){
             return 0;
         }
 
-        let userSandwitch = build_sandwitch(chCombo);
+        let userSandwitch = buildSandwitch(chCombo);
 
         if(userSandwitch === -1){
             return 0;
         }
 
-        end = show_final(chCombo, userSandwitch);
+        end = showFinal(chCombo, userSandwitch);
     }while(end !== 0)
 }
 
 const button = document.getElementById("orderBtn");
 
-button.addEventListener('click', main_menu);
+button.addEventListener('click', mainMenu);
