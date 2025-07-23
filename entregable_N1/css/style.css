@@ -1,0 +1,27 @@
+body{
+    background-image: url(../img/bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100vh;
+}
+
+.title{
+    width: 100vw;
+    text-align: center;
+    font-size: 4.5rem;
+}
+
+.btn-wrapper{
+    width: 100vw;
+    display: flex;
+}
+
+.order-btn{
+    margin: 0 auto;
+    font-size: 3rem;
+    border: 0;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    border-radius: 14px;
+}

@@ -287,4 +287,6 @@ function main_menu(){
     }while(end !== 0)
 }
 
-main_menu();
+const button = document.getElementById("orderBtn");
+
+button.addEventListener('click', main_menu);
