@@ -1,6 +1,8 @@
 # SandwithMania
-## Entregable N° 1 del curso JavaScript Flex de CoderHouse
+
+### Entregable N° 1
 ### Autor: Fernando F. Salomón
+### Curso: JavaScript Flex - CoderHouse
 
 ## Descripción general
 
