@@ -1,3 +1,33 @@
+//GLOBALS
+
+const prices = {
+    'Trigo blanco':120, 
+    'Semillas':130, 
+    'Focaccia':150, 
+    'Ciabatta':150,
+    'Salvado':130, 
+    'Sin Gluten': 140,
+    'Hummus': 1008, 
+    'Carne vacuna': 965, 
+    'Pollo': 297, 
+    'Atún': 792, 
+    'Pavo': 1240,
+    'Cheddar': 210,
+    'Mozzarella': 210,
+    'Mar del Plata': 240, 
+    'Queso crema': 150,
+    'Lechuga': 100, 
+    'Tomate': 100, 
+    'Pimientos': 200, 
+    'Avocado': 800, 
+    'Bacon': 1500,
+    'Mayonesa': 50,
+    'Savora': 50,
+    'Savora con miel': 70,
+    'Salsa picante': 70,
+    'Pesto': 80,
+}
+
 const ingredients = [
     {
         "name": "Pan",
@@ -5,14 +35,14 @@ const ingredients = [
             "big_combo": 1,
             "normal_combo": 1,
         },
-        "options": {
-            'Trigo blanco':120, 
-            'Semillas':130, 
-            'Focaccia':150, 
-            'Ciabatta':150,
-            'Salvado':130, 
-            'Sin Gluten': 140
-        }
+        "options": [
+            'Trigo blanco', 
+            'Semillas', 
+            'Focaccia', 
+            'Ciabatta',
+            'Salvado', 
+            'Sin Gluten',
+        ]
     },
     {
         "name": "Proteina",
@@ -20,13 +50,13 @@ const ingredients = [
             "big_combo": 2,
             "normal_combo": 1,
         },
-        "options": {
-            'Hummus': 1008, 
-            'Carne vacuna': 965, 
-            'Pollo': 297, 
-            'Atún': 792, 
-            'Pavo': 1240,
-        }
+        "options": [
+            'Hummus', 
+            'Carne vacuna', 
+            'Pollo', 
+            'Atún', 
+            'Pavo',
+        ]
     },
     {
         "name": "Quesos",
@@ -34,12 +64,12 @@ const ingredients = [
             "big_combo": 2,
             "normal_combo": 1,
         },
-        "options":{
-            'Cheddar': 210,
-            'Mozzarella': 210,
-            'Mar del Plata': 240, 
-            'Queso crema': 150,
-        },
+        "options":[
+            'Cheddar',
+            'Mozzarella',
+            'Mar del Plata', 
+            'Queso crema',
+        ],
     },
     {
         "name": "Agregados",
@@ -47,13 +77,13 @@ const ingredients = [
             "big_combo": 3,
             "normal_combo": 2,
         },
-        "options":{
-            'Lechuga': 100, 
-            'Tomate': 100, 
-            'Pimientos': 200, 
-            'Avocado': 800, 
-            'Bacon': 1500,
-        },
+        "options":[
+            'Lechuga', 
+            'Tomate', 
+            'Pimientos', 
+            'Avocado', 
+            'Bacon',
+        ],
     },
     {
         "name": "Aderezos",
@@ -61,36 +91,21 @@ const ingredients = [
             "big_combo": 3,
             "normal_combo": 2,
         },
-        "options":{
-            'Mayonesa': 50,
-            'Savora': 50,
-            'Savora con miel': 70,
-            'Salsa picante': 70,
-            'Pesto': 80,
-        },
+        "options":[
+            'Mayonesa',
+            'Savora',
+            'Savora con miel',
+            'Salsa picante',
+            'Pesto',
+        ],
     }
 ]
 
-// alert('Bienvenido a SandwitchMania\nDonde puedes armar tu sandwitch como tu quieras')
-// alert('A continuación te daremos las opciones para que armes tu sandwitch y al final veras el precio a pagar en caja.\nCOMIENZA A ARMAR TU SANDWITCH AHORA')
 
-const userSandwitch = {
-    'Pan': [],
-    'Proteina': [],
-    'Quesos': [],
-    'Agregados': [],
-    'Aderezos': [],
-}
 
-const userSandwitchPrice = {
-    'Pan': [],
-    'Proteina': [],
-    'Quesos': [],
-    'Agregados': [],
-    'Aderezos': [],
-}
+// FUNCTIONS
 
-function set_combo(){
+function choose_combo(){
     const message = "Elije el tamaño de tu combo:\n\n1. Normal\n2. Grande\n0. Salir"
     let chCombo = prompt(message)
 
@@ -102,6 +117,7 @@ function set_combo(){
             return 'big_combo';
             break;
         case '0':
+            return -1;
             break;
         default:
             alert('La opción elejida no es válida. Pruebe de vuelta');
@@ -111,65 +127,62 @@ function set_combo(){
     return chCombo;
 }
 
-let chCombo = set_combo();
+function build_sandwitch(chCombo){
 
-function get_ingredients(ingredients, chCombo){
+    const userSandwitch = {
+        'Pan': [],
+        'Proteina': [],
+        'Quesos': [],
+        'Agregados': [],
+        'Aderezos': [],
+    }
     
-    let all_options = [];
-    let finalPrice = [];
-    
-    ingredients.forEach((elem, index) => {
-        let ing_name = elem.name;
-        let max_n_choices = elem.max_amount_to_choose[chCombo];
-        let ing_options = [];
-        let ing_price = [];
+    ingredients.forEach(e => {
+
         let message = "";
+        let max_ch = e.max_amount_to_choose[chCombo];
+        let ing_name = e.name;
 
-        for (const [key, value] of Object.entries(elem.options)){
-            ing_options.push(key);
-            ing_price.push(value);
-        }
-
-        for(let i = 0; i < max_n_choices; i++){
-            message = `Elegí hasta tu opción/es para "${ing_name}" (Te quedan ${max_n_choices - i}):\n\n`;
-            ing_options.forEach((ing, index) => {
-                message += `${index+1}. ${ing}\n`;
+        for(let i = 0; i < max_ch; i++){
+            message = `Elegí tu/s opcion/es de ${ing_name} (Te quedan ${max_ch - i}):\n`
+            
+            e.options.forEach((ing, idx) => {
+                message += `${idx+1}. ${ing}\n`;
             })
+            
+            let isInputOk = false;
+            let chOption = "";
 
             do{
-                isInputOk = false;
-                chOption = parseInt(prompt(message));
-
-                if(!isNaN(chOption) && chOption > 0 && chOption <= ing_options.length){
+                chOption = prompt(message);
+                
+                if(!isNaN(chOption) && chOption > 0 && chOption <= e.options.length){
                     isInputOk = true;
                 }else{
                     alert('La opción elejida no es válida. Pruebe de vuelta');
                 }
 
-            }while(!isInputOk)
-                
-            userSandwitch[ing_name].push(ing_options[chOption-1]);
-            userSandwitchPrice[ing_name].push(ing_price[chOption-1]);
+            }while(!isInputOk);
+            
+            userSandwitch[ing_name].push(e.options[chOption-1]);
         }
-
-        all_options.push(ing_options);
-        finalPrice.push(ing_price)
-
     })
 
+    return userSandwitch;
 }
 
-get_ingredients(ingredients, chCombo)
+function calculate_price(userSandwitch){
+    let price = 0
+   
+    for(const [key,value] of Object.entries(userSandwitch)){
 
-function calculate_price(userSandwitchPrice){
-    let price = 0.00
-    for (const [key, value] of Object.entries(userSandwitchPrice)){
-        price += value.reduce((acc, val) => acc += parseFloat(val))
+        price += value.reduce((acc, val) => acc += parseFloat(prices[val]),0);
     }
+    
     return price;
 }
 
-function show_final_tab(userSandwitch, userSandwitchPrice){
+function show_final(chCombo, userSandwitch){
     let message = 'Por favor, controle que su orden es correcta:\n\n'
     if(chCombo === 'normal_combo'){
         message += 'Sandwitch común:\n'
@@ -182,7 +195,7 @@ function show_final_tab(userSandwitch, userSandwitchPrice){
         val.map(e => message += `(*)${e}\n`)
     }
 
-    let price = calculate_price(userSandwitchPrice)
+    let price = calculate_price(userSandwitch);
 
     message += `Precio sin Impuestos: $${price.toFixed(2)}\n`
     message += `IVA(21%): $${(price * 0.21).toFixed(2)}\n`
@@ -203,11 +216,28 @@ function show_final_tab(userSandwitch, userSandwitchPrice){
             break;
         default:
             alert('La opción elejida no es válida. Pruebe de vuelta');
-            show_final_tab(userSandwitch, userSandwitchPrice);
+            show_final(userSandwitch);
 
     }
 }
 
-calculate_price(userSandwitchPrice);
 
-show_final_tab(userSandwitch, userSandwitchPrice);
+
+function main_menu(){
+
+    alert('Bienvenido a SandwitchMania\nDonde puedes armar tu sandwitch como tu quieras')
+    alert('A continuación te daremos las opciones para que armes tu sandwitch y al final veras el precio a pagar en caja.\nCOMIENZA A ARMAR TU SANDWITCH AHORA')
+
+    let chCombo = choose_combo();
+
+    if(chCombo === -1){
+        return 0;
+    }
+
+    let userSandwitch = build_sandwitch(chCombo);
+
+    show_final(chCombo, userSandwitch);
+
+}
+
+main_menu();
