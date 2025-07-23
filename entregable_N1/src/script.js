@@ -264,12 +264,7 @@ function show_final(chCombo, userSandwitch){
     }else{
         return -1;
     }
-
-
-
 }
-
-
 
 function main_menu(){
 
