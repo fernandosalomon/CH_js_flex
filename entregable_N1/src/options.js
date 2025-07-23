@@ -106,7 +106,7 @@ const ingredients = [
 // FUNCTIONS
 
 function choose_combo(){
-    const message = "Elije el tamaño de tu combo:\n\n1. Normal\n2. Grande\n0. Salir"
+    const message = "Elije el tamaño de tu combo:\n\n1. Normal\n2. Grande\n\nQ. Salir"
     let chCombo = prompt(message)
 
     switch(chCombo){
@@ -116,7 +116,7 @@ function choose_combo(){
         case '2':
             return 'big_combo';
             break;
-        case '0':
+        case 'Q':
             return -1;
             break;
         default:
@@ -129,6 +129,7 @@ function choose_combo(){
 
 function build_sandwitch(chCombo){
 
+    let quit_signal = false;
     const userSandwitch = {
         'Pan': [],
         'Proteina': [],
@@ -137,18 +138,37 @@ function build_sandwitch(chCombo){
         'Aderezos': [],
     }
     
-    ingredients.forEach(e => {
+    for (const e of ingredients){
 
         let message = "";
         let max_ch = e.max_amount_to_choose[chCombo];
         let ing_name = e.name;
 
         for(let i = 0; i < max_ch; i++){
+
+            let show_foot = false;
+
             message = `Elegí tu/s opcion/es de ${ing_name} (Te quedan ${max_ch - i}):\n`
             
             e.options.forEach((ing, idx) => {
-                message += `${idx+1}. ${ing}\n`;
+                message += `${idx+1}. ${ing}`;
+                if(userSandwitch[ing_name].includes(ing)){
+                    message += " (*)"
+                    show_foot = true
+                }
+                message += '\n'
             })
+
+            
+            if(ing_name === 'Quesos' || ing_name === 'Aderezos' || ing_name === 'Agregados'){
+                message += `0. Sin ${ing_name}\n`;
+            }
+
+            message += "\nQ. Salir\n"
+            
+            if(show_foot){
+                message += "\n(*) La opción ya se encuentra elegida. Elijela de vuelta si quieres una porción doble."
+            }
             
             let isInputOk = false;
             let chOption = "";
@@ -158,17 +178,27 @@ function build_sandwitch(chCombo){
                 
                 if(!isNaN(chOption) && chOption > 0 && chOption <= e.options.length){
                     isInputOk = true;
+                    userSandwitch[ing_name].push(e.options[chOption-1]);
+                }else if(chOption === '0' && (ing_name === 'Quesos' || ing_name === 'Aderezos' || ing_name === 'Agregados')){
+                    i = max_ch;
+                    isInputOk = true;
+                }else if(chOption === 'Q'){
+                    quit_signal = true;
+                    break;
                 }else{
                     alert('La opción elejida no es válida. Pruebe de vuelta');
                 }
 
-            }while(!isInputOk);
-            
-            userSandwitch[ing_name].push(e.options[chOption-1]);
+            }while(!isInputOk);   
         }
-    })
-
-    return userSandwitch;
+        if(quit_signal){break;}
+    }
+    
+    if(quit_signal){
+        return -1;
+    }else{
+        return userSandwitch;
+    }
 }
 
 function calculate_price(userSandwitch){
@@ -183,6 +213,12 @@ function calculate_price(userSandwitch){
 }
 
 function show_final(chCombo, userSandwitch){
+
+    if(userSandwitch === undefined){
+        return -1;
+    }
+
+
     let message = 'Por favor, controle que su orden es correcta:\n\n'
     if(chCombo === 'normal_combo'){
         message += 'Sandwitch común:\n'
@@ -193,15 +229,18 @@ function show_final(chCombo, userSandwitch){
     for (const [key, val] of Object.entries(userSandwitch)){
         message += `${key}:\n`
         val.map(e => message += `(*)${e}\n`)
+        if(val.length === 0){
+            message += "(*) ---\n";
+        }
     }
 
     let price = calculate_price(userSandwitch);
 
-    message += `Precio sin Impuestos: $${price.toFixed(2)}\n`
+    message += `\n\nPrecio sin Impuestos: $${price.toFixed(2)}\n`
     message += `IVA(21%): $${(price * 0.21).toFixed(2)}\n`
     message += `Total a pagar: $${(price * 1.21).toFixed(2)}\n`
     
-    message += '\nSi su orden es correcta ingrese 1, si desea volver a armar su sandwitch ingrese 2, para salir ingrese 0.'
+    message += '\nIngrese 1 si su orden es correcta\nIngrese 2 si desea volver a armar su sandwitch\nIngrese Q para salir'
 
     let chOption = prompt(message);
 
@@ -209,14 +248,14 @@ function show_final(chCombo, userSandwitch){
         
         case '1':
             alert('Por favor acerquece al mostrador para realizar el pago y disfrutar de su sandwitch.')
-            break;
+            return 0;
         case '2':
-            break;
-        case '0':
+            return -1;
+        case 'Q':
             break;
         default:
             alert('La opción elejida no es válida. Pruebe de vuelta');
-            show_final(userSandwitch);
+            show_final(chCombo, userSandwitch);
 
     }
 }
@@ -225,19 +264,27 @@ function show_final(chCombo, userSandwitch){
 
 function main_menu(){
 
-    alert('Bienvenido a SandwitchMania\nDonde puedes armar tu sandwitch como tu quieras')
-    alert('A continuación te daremos las opciones para que armes tu sandwitch y al final veras el precio a pagar en caja.\nCOMIENZA A ARMAR TU SANDWITCH AHORA')
+    alert('Bienvenido a SandwitchMania\n\nDonde puedes armar tu sandwitch como tu quieras')
+    alert('A continuación te daremos las opciones para que armes tu sandwitch y al final veras el precio a pagar en caja.\n\nCOMIENZA A ARMAR TU SANDWITCH AHORA')
 
-    let chCombo = choose_combo();
+    let end;
 
-    if(chCombo === -1){
-        return 0;
-    }
+    do{
 
-    let userSandwitch = build_sandwitch(chCombo);
+        let chCombo = choose_combo();
 
-    show_final(chCombo, userSandwitch);
+        if(chCombo === -1){
+            return 0;
+        }
 
+        let userSandwitch = build_sandwitch(chCombo);
+
+        if(userSandwitch === -1){
+            return 0;
+        }
+
+        end = show_final(chCombo, userSandwitch);
+    }while(end !== 0)
 }
 
 main_menu();
