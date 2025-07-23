@@ -31,9 +31,9 @@ const prices = {
 const ingredients = [
     {
         "name": "Pan",
-        "max_amount_to_choose": {
-            "big_combo": 1,
-            "normal_combo": 1,
+        "maxAmountToChoose": {
+            "bigCombo": 1,
+            "normalCombo": 1,
         },
         "options": [
             'Trigo blanco', 
@@ -46,9 +46,9 @@ const ingredients = [
     },
     {
         "name": "Proteina",
-        "max_amount_to_choose": {
-            "big_combo": 2,
-            "normal_combo": 1,
+        "maxAmountToChoose": {
+            "bigCombo": 2,
+            "normalCombo": 1,
         },
         "options": [
             'Hummus', 
@@ -60,9 +60,9 @@ const ingredients = [
     },
     {
         "name": "Quesos",
-        "max_amount_to_choose": {
-            "big_combo": 2,
-            "normal_combo": 1,
+        "maxAmountToChoose": {
+            "bigCombo": 2,
+            "normalCombo": 1,
         },
         "options":[
             'Cheddar',
@@ -73,9 +73,9 @@ const ingredients = [
     },
     {
         "name": "Agregados",
-        "max_amount_to_choose":{
-            "big_combo": 3,
-            "normal_combo": 2,
+        "maxAmountToChoose":{
+            "bigCombo": 3,
+            "normalCombo": 2,
         },
         "options":[
             'Lechuga', 
@@ -87,9 +87,9 @@ const ingredients = [
     },
     {
         "name": "Aderezos",
-        "max_amount_to_choose":{
-            "big_combo": 3,
-            "normal_combo": 2,
+        "maxAmountToChoose":{
+            "bigCombo": 3,
+            "normalCombo": 2,
         },
         "options":[
             'Mayonesa',
@@ -109,10 +109,10 @@ function chooseCombo(){
 
     switch(chCombo){
         case '1':
-            return 'normal_combo';
+            return 'normalCombo';
             break;
         case '2':
-            return 'big_combo';
+            return 'bigCombo';
             break;
         case 'Q':
             return -1;
@@ -142,7 +142,7 @@ function buildSandwitch(chCombo){
     for (const ing of ingredients){
 
         let message = "";
-        let maxCH = ing.max_amount_to_choose[chCombo];
+        let maxCH = ing.maxAmountToChoose[chCombo];
         let ingName = ing.name;
 
         for(let i = 0; i < maxCH; i++){
@@ -241,10 +241,10 @@ function showFinal(chCombo, userSandwitch){
     }
 
     let message = 'Por favor, controle que su orden es correcta:\n\n'
-    if(chCombo === 'normal_combo'){
-        message += 'Sandwitch común:\n'
+    if(chCombo === 'normalCombo'){
+        message += 'Sandwitch Común:\n'
     }else{
-        message += 'Sandwitch big:\n'
+        message += 'Sandwitch Big:\n'
     }
 
     for (const [section, ings] of Object.entries(userSandwitch)){
