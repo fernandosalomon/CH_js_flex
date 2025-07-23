@@ -38,9 +38,11 @@ Además, consta de tres funciones principales:
 
 * ```build_sandwith(chCombo)```: Recibe el tipo de combo elegido por el usuario. Pide al usuario mediante prompt elegir los ingredientes disponibles dentro de cinco secciones: Pan, Proteina, Quesos, Agregados y Aderezos. Para las primeras dos se debe elegir algún ingrediente. En las últimas tres el usuario tiene la opción de no agregar ese ingrediente. La función retorna un objeto cuyas propiedades son las diferentes secciones y los valores de las propiedades son arrays con las opciones elegidas. También se puede salir del simulador en cualquier momento (usando la opción 'Q'), con lo que la función devuelve '-1' (señal de salida).
 
-* ```show_final(chCombo, userSandwitch)```: Recibe el tipo de combo elegido por el usuario y el objeto con la elección de ingredientes del usuario. Muestra toda la información del pedido en la pantalla, incluido el precio final sin y con IVA (para calcular el precio llama a la función calculate_price()). Por prompt pide al usuario que confirme si el pedido es correcto (ingresar 1), con lo que muestra un cartel para acercarse al mostrador y pagar, si desea comenzar a armar el sandwitch desde el inicio (ingresar 2), con lo que reinicia el simulador, o salir del simulador (ingresar 'Q').
+* ```show_final(chCombo, userSandwitch)```: Recibe el tipo de combo elegido por el usuario y el objeto con la elección de ingredientes del usuario. Muestra la información del producto en la pantalla. Se pide al usuario confirmar que la orden es correcta (Oprimiendo "Aceptar") o volver a elegir los ingredientes (Oprimiendo "Cancelar"), mediante la función  ```confirm()```.
 
 * ```calculate_price(userSandwitch)```: Recibe un objeto con la elección de ingredientes del usuario. Suma el precio de todos los ingredientes, buscando cada uno de ellos en el objeto prices, y devuelve un valor float con ese precio final.
+
+* ```price_menu(userSandwitch)```: Recibe un objeto con la elección de ingredientes del usuario. Llama a la función ```calculate_price()``` y muestra el precio final sin y con IVA. Pide al usuario confirmar el pedido o cancelarlo, mediante la función ```confirm()```. Si el usuario confirma el pedido, muestra un mensaje indicandole que vaya a mostrador para realizar el pago.
 
 En todos los casos donde se utiliza la función ```prompt()``` para permitir al usuario elegir una opción se realiza una validación del valor ingresado por el usuario.
 

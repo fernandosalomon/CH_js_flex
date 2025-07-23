@@ -212,6 +212,27 @@ function calculate_price(userSandwitch){
     return price;
 }
 
+function price_menu(userSandwitch){
+    
+    let message = "Detalle de pago:\n\n";
+    let price = calculate_price(userSandwitch);
+    
+    message += `Precio sin Impuestos: $${price.toFixed(2)}\n`
+    message += `IVA(21%): $${(price * 0.21).toFixed(2)}\n`
+    message += `Total a pagar: $${(price * 1.21).toFixed(2)}\n`
+    
+    message += '\nOprima "Aceptar" si esta listo para realizar el pago\nOprima "Cancelar" si desea cancelar su pedido'
+
+    let isPayOk = confirm(message);
+
+    if(isPayOk){
+        alert('Por favor acerquece al mostrador para realizar el pago y disfrutar de su sandwitch.')
+        return 0;
+    }else{
+        return -1;
+    }
+}
+
 function show_final(chCombo, userSandwitch){
 
     if(userSandwitch === undefined){
@@ -234,30 +255,18 @@ function show_final(chCombo, userSandwitch){
         }
     }
 
-    let price = calculate_price(userSandwitch);
+    message += '\nSi su orden es correcta oprima "Aceptar". Si desea cambiar su orden oprima "Cancelar"'
 
-    message += `\n\nPrecio sin Impuestos: $${price.toFixed(2)}\n`
-    message += `IVA(21%): $${(price * 0.21).toFixed(2)}\n`
-    message += `Total a pagar: $${(price * 1.21).toFixed(2)}\n`
-    
-    message += '\nIngrese 1 si su orden es correcta\nIngrese 2 si desea volver a armar su sandwitch\nIngrese Q para salir'
+    let isOrderOk = confirm(message);
 
-    let chOption = prompt(message);
-
-    switch(chOption){
-        
-        case '1':
-            alert('Por favor acerquece al mostrador para realizar el pago y disfrutar de su sandwitch.')
-            return 0;
-        case '2':
-            return -1;
-        case 'Q':
-            break;
-        default:
-            alert('La opción elejida no es válida. Pruebe de vuelta');
-            show_final(chCombo, userSandwitch);
-
+    if(isOrderOk){
+        return price_menu(userSandwitch)
+    }else{
+        return -1;
     }
+
+
+
 }
 
 
