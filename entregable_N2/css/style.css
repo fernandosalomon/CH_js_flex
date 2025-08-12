@@ -23,11 +23,16 @@
 }
 
 .option-card {
-  background-color: #b0767c;
+  background-color: #af757b;
   border-radius: 14px;
   padding: 8px;
   margin-right: 12px;
   cursor: pointer;
+  position: relative;
+}
+
+.option-card_selected {
+  background-color: #ca3f40;
 }
 
 .option-title {
@@ -39,4 +44,19 @@
 .option-prize {
   font-size: 1rem;
   color: #fff;
+}
+
+.unitMeter{
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: red;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  color: white;
+  font-weight: 700;
 }

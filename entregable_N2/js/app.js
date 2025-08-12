@@ -161,6 +161,27 @@ options = [
   },
 ];
 
+let userCH = [];
+
+function addRemoveElementToSandwitch(ingrediente, cardElement){
+  
+  cardElement = document.getElementById(ingrediente);
+  unitMeter = document.getElementById(`um-${ingrediente}`);
+
+  if(userCH.findIndex(ing => ing == ingrediente) != -1){
+    userCH = userCH.filter(ing => ing != ingrediente)
+    cardElement.classList.remove("option-card_selected");
+  }else{
+    userCH.push(ingrediente);
+    
+    let ingredientAmount = userCH.filter(ing => ing == ingrediente).length;
+    
+    unitMeter.classList.add("d-flex");
+    unitMeter.innerHTML = `x${ingredientAmount}`;
+    cardElement.classList.add("option-card_selected");
+  }
+}
+
 const mainWrapper = document.getElementById("optionsWrapper");
 
 options.map((option) => {
@@ -180,20 +201,31 @@ options.map((option) => {
   row.classList.add("row")
   
   option.options.map((ing) => {
-    const card = document.createElement("div");
-    card.classList.add("col-12", "col-sm-6", "col-md-4", "col-lg-3", "gy-3", "gx-3");
-    card.innerHTML = `
-    <div class="card option-card mx-auto" style="width: 9rem; height: 14rem;">
+    const cardWrapper = document.createElement("div");
+    cardWrapper.classList.add("col-12", "col-sm-6", "col-md-4", "col-lg-3", "gy-3", "gx-3", "card", "option-card");
+    cardWrapper.id = ing;
+    cardWrapper.innerHTML = `
       <img src=${prices[ing].image} class="card-img-top" alt="${ing}" style="min-height: 7rem;">
       <div class="card-body">
         <h5 class="option-title">${ing}</h5>
         <p class="option-prize">$${prices[ing].price}</p>
       </div>
-    </div>
     `;
-    row.appendChild(card);
+
+    const unitMeter = document.createElement("div");
+    unitMeter.id = `um-${ing}`;
+    unitMeter.innerHTML = 'x2';
+    unitMeter.classList.add("unitMeter");
+
+    cardWrapper.appendChild(unitMeter);
+
+    row.appendChild(cardWrapper);
+    
+    cardWrapper.addEventListener('click', () => {addRemoveElementToSandwitch(ing)})
+
   });
 
   optionWrapper.appendChild(row);
   mainWrapper.appendChild(optionWrapper);
+
 });
