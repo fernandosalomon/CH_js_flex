@@ -161,25 +161,29 @@ options = [
   },
 ];
 
-const wrapper = document.getElementById("wrapper");
+const mainWrapper = document.getElementById("optionsWrapper");
 
 options.map((option) => {
+
   const optionWrapper = document.createElement("div");
 
+  //Titulo de la opción
   const title = document.createElement("h2");
+  title.classList.add("mb-4")
   title.innerText = `
     ${option.name} (Puedes elegir ${option.maxAmountToChoose["big"]})
   `;
   optionWrapper.appendChild(title);
-
-  ingredientWrapper = document.createElement("div");
-  ingredientWrapper.classList.add("d-flex");
-  ingredientWrapper.classList.add("flex-wrap");
-
+  
+  //Sistema Grid para las opciones
+  const row = document.createElement("div");
+  row.classList.add("row")
+  
   option.options.map((ing) => {
     const card = document.createElement("div");
+    card.classList.add("col-12", "col-sm-6", "col-md-4", "col-lg-3", "gy-3", "gx-3");
     card.innerHTML = `
-    <div class="card option-card mb-2" style="width: 9rem; height: 14rem;">
+    <div class="card option-card mx-auto" style="width: 9rem; height: 14rem;">
       <img src=${prices[ing].image} class="card-img-top" alt="${ing}" style="min-height: 7rem;">
       <div class="card-body">
         <h5 class="option-title">${ing}</h5>
@@ -187,9 +191,9 @@ options.map((option) => {
       </div>
     </div>
     `;
-    ingredientWrapper.appendChild(card);
+    row.appendChild(card);
   });
 
-  optionWrapper.appendChild(ingredientWrapper);
-  wrapper.appendChild(optionWrapper);
+  optionWrapper.appendChild(row);
+  mainWrapper.appendChild(optionWrapper);
 });
