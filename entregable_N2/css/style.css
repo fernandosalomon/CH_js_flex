@@ -27,18 +27,16 @@
   border-radius: 14px;
   padding: 8px;
   margin-right: 12px;
-}
-
-.option-img {
-  width: 50%;
+  cursor: pointer;
 }
 
 .option-title {
-  font-size: 1.4rem;
+  font-size: 1rem;
   color: #fff;
+  min-height: 40px;
 }
 
 .option-prize {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #fff;
 }
