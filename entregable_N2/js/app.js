@@ -178,6 +178,8 @@ function addItem(ingredient, section) {
   unitMeter.innerHTML = `x${ingredientAmount}`;
   cardElement.classList.add("option-card_selected");
 
+  cardElement.querySelector(".btnRemove").classList.remove("disabled");
+
   if (
     remainingChoosings(
       options[section.id].options,
@@ -193,7 +195,7 @@ function addItem(ingredient, section) {
   }
 }
 
-function removeItem(ingredient) {
+function removeItem(ingredient, section) {
   cardElement = document.getElementById(ingredient.id);
   unitMeter = document.getElementById(`um-${ingredient.id}`);
 
@@ -207,6 +209,13 @@ function removeItem(ingredient) {
   if (ingredientAmount <= 0) {
     unitMeter.classList.remove("d-flex");
     cardElement.classList.remove("option-card_selected");
+
+    cardElement.querySelector(".btnRemove").classList.add("disabled");
+  }
+
+  section = document.getElementById(section.id);
+  for (btn of section.querySelectorAll(".btnAdd")) {
+    btn.classList.remove("disabled");
   }
 }
 
@@ -274,7 +283,7 @@ for (const [key, value] of Object.entries(options)) {
         <p class="option-prize">$${prices[ing].price}</p>
         <div class='d-flex justify-content-center'>
             <button class='btn btnAdd' onClick='(() => addItem(${ing}, ${key}))()'>+</button>
-            <button class='btn btnRemove' onClick='(() => removeItem(${ing}, ${key}))()'>-</button>
+            <button class='btn btnRemove disabled' onClick='(() => removeItem(${ing}, ${key}))()'>-</button>
         </div>
       </div>
     `;
