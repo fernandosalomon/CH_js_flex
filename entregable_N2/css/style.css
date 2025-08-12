@@ -33,6 +33,8 @@
 
 .option-card_selected {
   background-color: #ca3f40;
+  width: 7rem !important;
+  border-radius: 14px !important;
 }
 
 .option-title {
@@ -92,4 +94,6 @@
   transform: translateY(0);
 }
 
-
+.btnSandwitchSize_selected{
+  background-color: #ca3f40;
+}

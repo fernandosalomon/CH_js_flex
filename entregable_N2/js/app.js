@@ -162,18 +162,46 @@ options = [
 ];
 
 let userCH = [];
+let sandwitchSize = "";
+
+function setSandwitchSize(option){
+  sandwitchSize = option;
+  btn_normal = document.getElementById('idSandwitchSizeNormal')
+  btn_big = document.getElementById('idSandwitchSizeBig')
+
+  if(option == 'normal'){
+    btn_normal.classList.add("btnSandwitchSize_selected")
+    btn_big.classList.remove("btnSandwitchSize_selected")
+  }else{
+    btn_normal.classList.remove("btnSandwitchSize_selected")
+    btn_big.classList.add("btnSandwitchSize_selected")
+  }
+}
+
+function remainingChoosings(options, max){
+  let nChOptions = userCH.map(ing => options.filter(opt => opt == ing)).flat().length
+  return max - nChOptions
+}
 
 function addItem(ingredient){
   cardElement = document.getElementById(ingredient.id);
   unitMeter = document.getElementById(`um-${ingredient.id}`);
 
-  userCH.push(ingredient);
+  userCH.push(ingredient.id);
 
-  let ingredientAmount = userCH.filter(ing => ing == ingredient).length;
+  let ingredientAmount = userCH.filter(ing => ing == ingredient.id).length;
     
   unitMeter.classList.add("d-flex");
   unitMeter.innerHTML = `x${ingredientAmount}`;
   cardElement.classList.add("option-card_selected");
+
+  console.log(remainingChoosings([
+      "Mayonesa",
+      "Savora",
+      "Savora_con_miel",
+      "Salsa_picante",
+      "Pesto",
+    ], 3));
 }
 
 function removeItem(ingredient){
@@ -183,7 +211,7 @@ function removeItem(ingredient){
   index = userCH.findIndex(ing => ing == ingredient);
   userCH.splice(index, 1);
 
-  let ingredientAmount = userCH.filter(ing => ing == ingredient).length;
+  let ingredientAmount = userCH.filter(ing => ing == ingredient.id).length;
     
   unitMeter.innerHTML = `x${ingredientAmount}`;
   
@@ -194,36 +222,42 @@ function removeItem(ingredient){
   }
 }
 
-function addRemoveElementToSandwitch(ingrediente, cardElement){
-  
-  cardElement = document.getElementById(ingrediente);
-  unitMeter = document.getElementById(`um-${ingrediente}`);
-
-  if(userCH.findIndex(ing => ing == ingrediente) != -1){
-    userCH = userCH.filter(ing => ing != ingrediente)
-    cardElement.classList.remove("option-card_selected");
-  }else{
-    userCH.push(ingrediente);
-    
-    let ingredientAmount = userCH.filter(ing => ing == ingrediente).length;
-    
-    unitMeter.classList.add("d-flex");
-    unitMeter.innerHTML = `x${ingredientAmount}`;
-    cardElement.classList.add("option-card_selected");
-  }
-}
-
 const mainWrapper = document.getElementById("optionsWrapper");
 
 options.map((option) => {
 
   const optionWrapper = document.createElement("div");
 
+  const comboSize = document.createElement("div");
+  const comboSizeTitle = document.createElement("h2");
+  comboSizeTitle.innerText = "Elige el tamaño de tu sandwitch";
+  comboSize.appendChild(comboSizeTitle);
+  const comboSizeOptions = document.createElement("div");
+  comboSizeOptions.classList.add("d-flex", "justify-content-center", "gap-5")
+  comboSizeOptions.id = 'comboSizeOptions';
+  comboSizeOptions.innerHTML = `
+    <div classname='card option-card' onClick='(() => setSandwitchSize("normal"))()' id='idSandwitchSizeNormal'>
+      <img src='../img/normal.png' class="card-img-top" alt="Tamaño normal" style="max-height: 140px;">
+      <div class="card-body">
+        <h5 class="text-center">Normal</h5>
+      </div>
+    </div>
+    <div classname='card option-card' onClick='(() => setSandwitchSize("big"))()' id='idSandwitchSizeBig'>
+      <img src='../img/big.png' class="card-img-top" alt="Tamaño normal" style="max-height: 140px;">
+      <div class="card-body">
+        <h5 class="text-center">Grande</h5>
+      </div>
+    </div>
+  `
+  comboSize.appendChild(comboSizeOptions);
+  optionWrapper.appendChild(comboSize);
+
+
   //Titulo de la opción
   const title = document.createElement("h2");
   title.classList.add("mb-4")
   title.innerText = `
-    ${option.name} (Puedes elegir ${option.maxAmountToChoose["big"]})
+    Elegí tu/s opcion/es de ${option.name} (Te quedan ${option.maxAmountToChoose["big"]})
   `;
   optionWrapper.appendChild(title);
   
