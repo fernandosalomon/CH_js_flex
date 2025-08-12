@@ -48,7 +48,7 @@
   color: #fff;
 }
 
-.unitMeter{
+.unitMeter {
   width: 42px;
   height: 42px;
   border-radius: 50%;
@@ -63,7 +63,7 @@
   font-weight: 700;
 }
 
-.btnAddRemove{
+.btnAddRemove {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -79,21 +79,35 @@
 }
 
 .btnAddRemove:hover,
-.button-5:focus{
+.button-5:focus {
   background-color: red;
   color: white;
 }
 
-.btnAddRemove:hover{
+.btnAddRemove:hover {
   transform: translateY(-1px);
 }
 
 .btnAddRemove:active {
   background-color: red;
-  box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
   transform: translateY(0);
 }
 
-.btnSandwitchSize_selected{
+.sandwitchSizeBtn,
+.sandwitchSizeBtn:hover {
+  padding: 0 !important;
+  border: 0;
+  background-color: #af757b;
+}
+
+.sandwitchSizeBtn:active {
+  border: 0;
+}
+
+.sandwitchSizeBtn_active,
+.sandwitchSizeBtn_active:hover,
+.sandwitchSizeBtn_active:active {
   background-color: #ca3f40;
+  border: 0;
 }
