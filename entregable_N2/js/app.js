@@ -1,5 +1,5 @@
 const prices = {
-  "Trigo blanco": {
+  Trigo_blanco: {
     price: 120,
     image: "../img/ingredientes/pan_trigo.png",
   },
@@ -19,7 +19,7 @@ const prices = {
     price: 130,
     image: "../img/ingredientes/salvado.png",
   },
-  "Sin Gluten": {
+  Sin_gluten: {
     price: 140,
     image: "../img/ingredientes/sin_gluten.png",
   },
@@ -27,7 +27,7 @@ const prices = {
     price: 1008,
     image: "../img/ingredientes/hummus.png",
   },
-  "Carne vacuna": {
+  Carne_vacuna: {
     price: 965,
     image: "../img/ingredientes/carne_vacuna.png",
   },
@@ -35,7 +35,7 @@ const prices = {
     price: 297,
     image: "../img/ingredientes/pollo.png",
   },
-  Atún: {
+  Atun: {
     price: 792,
     image: "../img/ingredientes/atun.png",
   },
@@ -51,11 +51,11 @@ const prices = {
     price: 210,
     image: "../img/ingredientes/mozzarella.png",
   },
-  "Mar del Plata": {
+  Mar_del_plata: {
     price: 240,
     image: "../img/ingredientes/mar_del_plata.png",
   },
-  "Queso crema": {
+  Queso_crema: {
     price: 150,
     image: "../img/ingredientes/queso_crema.png",
   },
@@ -87,11 +87,11 @@ const prices = {
     price: 50,
     image: "../img/ingredientes/savora.png",
   },
-  "Savora con miel": {
+  Savora_con_miel: {
     price: 70,
     image: "../img/ingredientes/savora_miel.png",
   },
-  "Salsa picante": {
+  Salsa_picante: {
     price: 70,
     image: "../img/ingredientes/salsa_picante.png",
   },
@@ -109,12 +109,12 @@ options = [
       normal: 1,
     },
     options: [
-      "Trigo blanco",
+      "Trigo_blanco",
       "Semillas",
       "Focaccia",
       "Ciabatta",
       "Salvado",
-      "Sin Gluten",
+      "Sin_gluten",
     ],
   },
 
@@ -124,7 +124,7 @@ options = [
       big: 2,
       normal: 1,
     },
-    options: ["Hummus", "Carne vacuna", "Pollo", "Atún", "Pavo"],
+    options: ["Hummus", "Carne_vacuna", "Pollo", "Atun", "Pavo"],
   },
 
   {
@@ -133,7 +133,7 @@ options = [
       big: 2,
       normal: 1,
     },
-    options: ["Cheddar", "Mozzarella", "Mar del Plata", "Queso crema"],
+    options: ["Cheddar", "Mozzarella", "Mar_del_plata", "Queso_crema"],
   },
 
   {
@@ -154,14 +154,45 @@ options = [
     options: [
       "Mayonesa",
       "Savora",
-      "Savora con miel",
-      "Salsa picante",
+      "Savora_con_miel",
+      "Salsa_picante",
       "Pesto",
     ],
   },
 ];
 
 let userCH = [];
+
+function addItem(ingredient){
+  cardElement = document.getElementById(ingredient.id);
+  unitMeter = document.getElementById(`um-${ingredient.id}`);
+
+  userCH.push(ingredient);
+
+  let ingredientAmount = userCH.filter(ing => ing == ingredient).length;
+    
+  unitMeter.classList.add("d-flex");
+  unitMeter.innerHTML = `x${ingredientAmount}`;
+  cardElement.classList.add("option-card_selected");
+}
+
+function removeItem(ingredient){
+  cardElement = document.getElementById(ingredient.id);
+  unitMeter = document.getElementById(`um-${ingredient.id}`);
+
+  index = userCH.findIndex(ing => ing == ingredient);
+  userCH.splice(index, 1);
+
+  let ingredientAmount = userCH.filter(ing => ing == ingredient).length;
+    
+  unitMeter.innerHTML = `x${ingredientAmount}`;
+  
+
+  if(ingredientAmount <= 0){
+    unitMeter.classList.remove('d-flex');
+    cardElement.classList.remove("option-card_selected");
+  }
+}
 
 function addRemoveElementToSandwitch(ingrediente, cardElement){
   
@@ -201,6 +232,7 @@ options.map((option) => {
   row.classList.add("row")
   
   option.options.map((ing) => {
+ 
     const cardWrapper = document.createElement("div");
     cardWrapper.classList.add("col-12", "col-sm-6", "col-md-4", "col-lg-3", "gy-3", "gx-3", "card", "option-card");
     cardWrapper.id = ing;
@@ -209,6 +241,10 @@ options.map((option) => {
       <div class="card-body">
         <h5 class="option-title">${ing}</h5>
         <p class="option-prize">$${prices[ing].price}</p>
+        <div class='d-flex justify-content-center'>
+            <button class='btn btnAddRemove' onClick='(() => addItem(${ing}))()'>+</button>
+            <button class='btn btnAddRemove' onClick='(() => removeItem(${ing}))()'>-</button>
+        </div>
       </div>
     `;
 
@@ -221,7 +257,6 @@ options.map((option) => {
 
     row.appendChild(cardWrapper);
     
-    cardWrapper.addEventListener('click', () => {addRemoveElementToSandwitch(ing)})
 
   });
 
