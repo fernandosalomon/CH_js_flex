@@ -1,15 +1,98 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SandwitchMania - Arma tu sandwith</title>
-    <link rel="favicon" href="./img/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="./css/style.css">
-</head>
-<body>
-    
+    <link rel="icon" type="image/x-icon" href="./img/favicon.ico" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#chooseIngredientsModal"
+    >
+      Launch demo modal
+    </button>
 
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="chooseIngredientsModal"
+      tabindex="-1"
+      aria-labelledby="chooseIngredientsModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="header-container">
+              <h1 class="modal-title montserrat-font">Arma tu sandwith</h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="container">
+              <h2>Pan</h2>
+              <div class="d-flex">
+                <div class="option-card" style="width: 18rem">
+                  <img
+                    src="./img/brioche.png"
+                    class="card-img-top border-0 rounded mb-4"
+                    alt="Pan Brioche"
+                  />
+                  <div class="card-body">
+                    <h5 class="option-title">Brioche</h5>
+                    <p class="option-prize">$1800</p>
+                  </div>
+                </div>
+
+                <div class="option-card" style="width: 18rem">
+                  <img
+                    src="./img/brioche.png"
+                    class="card-img-top border-0 rounded mb-4"
+                    alt="Pan Brioche"
+                  />
+                  <div class="card-body">
+                    <h5 class="option-title">Brioche</h5>
+                    <p class="option-prize">$1800</p>
+                  </div>
+                </div>
+
+                <div class="option-card" style="width: 18rem">
+                  <img
+                    src="./img/brioche.png"
+                    class="card-img-top border-0 rounded mb-4"
+                    alt="Pan Brioche"
+                  />
+                  <div class="card-body">
+                    <h5 class="option-title">Brioche</h5>
+                    <p class="option-prize">$1800</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+      crossorigin="anonymous"
+    ></script>
     <script src="./js/app.js"></script>
-</body>
+  </body>
 </html>

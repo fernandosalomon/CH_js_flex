@@ -1,6 +1,44 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
 }
 
+.header-container {
+  display: flex;
+  align-items: center;
+}
+
+.header-container h1 {
+  font-size: 1.8rem;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.header-container button {
+  font-size: 1.6rem;
+}
+
+.option-card {
+  background-color: #b0767c;
+  border-radius: 14px;
+  padding: 8px;
+  margin-right: 12px;
+}
+
+.option-img {
+  width: 50%;
+}
+
+.option-title {
+  font-size: 1.4rem;
+  color: #fff;
+}
+
+.option-prize {
+  font-size: 1.2rem;
+  color: #fff;
+}
