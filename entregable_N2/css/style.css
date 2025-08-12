@@ -63,7 +63,8 @@
   font-weight: 700;
 }
 
-.btnAddRemove {
+.btnAdd,
+.btnRemove {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -78,17 +79,20 @@
   transition: all 250ms;
 }
 
-.btnAddRemove:hover,
+.btnAdd:hover,
+.btnRemove:hover,
 .button-5:focus {
   background-color: red;
   color: white;
 }
 
-.btnAddRemove:hover {
+.btnAdd:hover,
+.btnRemove:hover {
   transform: translateY(-1px);
 }
 
-.btnAddRemove:active {
+.btnAdd:active,
+.btnRemove:active {
   background-color: red;
   box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
   transform: translateY(0);

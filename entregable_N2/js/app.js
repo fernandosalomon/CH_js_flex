@@ -159,7 +159,14 @@ options = {
 let userCH = [];
 let sandwitchSize = "";
 
-function addItem(ingredient) {
+function remainingChoosings(options, max) {
+  let nChOptions = userCH
+    .map((ing) => options.filter((opt) => opt == ing))
+    .flat().length;
+  return max - nChOptions;
+}
+
+function addItem(ingredient, section) {
   cardElement = document.getElementById(ingredient.id);
   unitMeter = document.getElementById(`um-${ingredient.id}`);
 
@@ -170,6 +177,20 @@ function addItem(ingredient) {
   unitMeter.classList.add("d-flex");
   unitMeter.innerHTML = `x${ingredientAmount}`;
   cardElement.classList.add("option-card_selected");
+
+  if (
+    remainingChoosings(
+      options[section.id].options,
+      options[section.id].maxAmountToChoose[
+        sandwitchSize == 0 ? "normal" : "big"
+      ]
+    ) <= 0
+  ) {
+    section = document.getElementById(section.id);
+    for (btn of section.querySelectorAll(".btnAdd")) {
+      btn.classList.add("disabled");
+    }
+  }
 }
 
 function removeItem(ingredient) {
@@ -225,7 +246,7 @@ for (const [key, value] of Object.entries(options)) {
   const title = document.createElement("h2");
   title.classList.add("mb-4");
   title.innerText = `
-    Elegí tu/s opcion/es de ${key} (Te quedan ${value.maxAmountToChoose["big"]})
+    Elegí tu/s opcion/es de ${key} (Puedes elegir hasta ${value.maxAmountToChoose["big"]} opcion/es)
   `;
   wrapper.appendChild(title);
 
@@ -252,8 +273,8 @@ for (const [key, value] of Object.entries(options)) {
         <h5 class="option-title">${ing}</h5>
         <p class="option-prize">$${prices[ing].price}</p>
         <div class='d-flex justify-content-center'>
-            <button class='btn btnAddRemove' onClick='(() => addItem(${ing}))()'>+</button>
-            <button class='btn btnAddRemove' onClick='(() => removeItem(${ing}))()'>-</button>
+            <button class='btn btnAdd' onClick='(() => addItem(${ing}, ${key}))()'>+</button>
+            <button class='btn btnRemove' onClick='(() => removeItem(${ing}, ${key}))()'>-</button>
         </div>
       </div>
     `;
