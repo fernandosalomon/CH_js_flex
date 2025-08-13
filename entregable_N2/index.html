@@ -46,7 +46,14 @@
               <a class="nav-link" href="#">Sobre nosotros</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Ordenar</a>
+              <button
+                class="nav-link"
+                href="#"
+                data-bs-toggle="modal"
+                data-bs-target="#chooseIngredientsModal"
+              >
+                Ordenar
+              </button>
             </li>
           </ul>
         </div>
@@ -80,7 +87,7 @@
       <p class="m-0 py-3">Todos los derechos reservados.</p>
     </footer>
 
-    <!-- Modal -->
+    <!-- Modal para armar el sandwitch -->
     <div
       class="modal fade"
       id="chooseIngredientsModal"
@@ -152,17 +159,113 @@
           <div class="modal-footer">
             <p class="text" id="totalPrice">Precio total: $0</p>
             <div class="btn-group">
-              <button class="btn btn-danger btnBuy disabled" id="btnBuy">
+              <button
+                class="btn btn-danger btnBuy disabled"
+                id="btnBuy"
+                data-bs-toggle="modal"
+                data-bs-target="#paymentModal"
+              >
                 Comprar
               </button>
               <button
                 class="btn btn-light btnCancel"
                 data-bs-dismiss="modal"
                 aria-label="Close"
+                onClick="() => sessionStorage.clear()"
               >
                 Cancelar
               </button>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="paymentModal"
+      tabindex="-1"
+      aria-labelledby="paymentModal"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="header-container d-flex justify-content-between w-100">
+              <h1 class="modal-title montserrat-font">Detalle de pago</h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div class="modal-body">
+            <p class="m-0" id="precioSinIVA">Precio sin impuestos: $0</p>
+            <p class="m-0" id="IVA">IVA(21%): $0</p>
+            <p class="m-0" id="precioConIVA">Total a pagar: $0</p>
+          </div>
+          <div class="modal-footer d-flex align-items-center">
+            <div class="btn-group">
+              <button
+                type="button"
+                class="btn btn-danger btn-lg fw-bold"
+                data-bs-toggle="modal"
+                data-bs-target="#finalModal"
+              >
+                Confirmar orden
+              </button>
+              <button
+                class="btn btn-light"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                Cancelar orden
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="finalModal"
+      tabindex="-1"
+      aria-labelledby="finalModal"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="header-container d-flex justify-content-between w-100">
+              <h1 class="modal-title montserrat-font">Gracias por tu compra</h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div class="modal-body text-center">
+            <p>
+              Por favor, acercate al mostrador para realizar el pago y disfrutar
+              de tu sándwich.
+            </p>
+          </div>
+          <div
+            class="modal-footer d-flex justify-content-center align-items-center"
+          >
+            <button
+              type="button"
+              class="btn btn-danger btn-lg"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              Cerrar
+            </button>
           </div>
         </div>
       </div>
@@ -173,6 +276,7 @@
       integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
       crossorigin="anonymous"
     ></script>
+    <script src="./js/localStorage.js"></script>
     <script src="./js/app.js"></script>
   </body>
 </html>

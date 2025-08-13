@@ -1,0 +1,164 @@
+// Esta función simula que traemos los datos de precios y las opciones de ingredientes desde una base de datos hacia el localStorage.
+
+(() => {
+  const prices = {
+    Trigo: {
+      price: 120,
+      image: "../img/ingredientes/pan_trigo.png",
+    },
+    Semillas: {
+      price: 130,
+      image: "../img/ingredientes/pan_cereales.png",
+    },
+    Focaccia: {
+      price: 150,
+      image: "../img/ingredientes/focaccia.png",
+    },
+    Ciabatta: {
+      price: 150,
+      image: "../img/ingredientes/ciabatta.png",
+    },
+    Salvado: {
+      price: 130,
+      image: "../img/ingredientes/salvado.png",
+    },
+    Sin_gluten: {
+      price: 140,
+      image: "../img/ingredientes/sin_gluten.png",
+    },
+    Hummus: {
+      price: 1008,
+      image: "../img/ingredientes/hummus.png",
+    },
+    Carne_vacuna: {
+      price: 965,
+      image: "../img/ingredientes/carne_vacuna.png",
+    },
+    Pollo: {
+      price: 297,
+      image: "../img/ingredientes/pollo.png",
+    },
+    Atun: {
+      price: 792,
+      image: "../img/ingredientes/atun.png",
+    },
+    Pavo: {
+      price: 1240,
+      image: "../img/ingredientes/pavo.png",
+    },
+    Cheddar: {
+      price: 210,
+      image: "../img/ingredientes/cheddar.png",
+    },
+    Mozzarella: {
+      price: 210,
+      image: "../img/ingredientes/mozzarella.png",
+    },
+    Mar_del_plata: {
+      price: 240,
+      image: "../img/ingredientes/mar_del_plata.png",
+    },
+    Queso_crema: {
+      price: 150,
+      image: "../img/ingredientes/queso_crema.png",
+    },
+    Lechuga: {
+      price: 100,
+      image: "../img/ingredientes/lechuga.png",
+    },
+    Tomate: {
+      price: 100,
+      image: "../img/ingredientes/tomate.png",
+    },
+    Pimientos: {
+      price: 200,
+      image: "../img/ingredientes/pimientos.png",
+    },
+    Avocado: {
+      price: 800,
+      image: "../img/ingredientes/avocado.png",
+    },
+    Bacon: {
+      price: 1500,
+      image: "../img/ingredientes/bacon.png",
+    },
+    Mayonesa: {
+      price: 50,
+      image: "../img/ingredientes/mayonesa.png",
+    },
+    Savora: {
+      price: 50,
+      image: "../img/ingredientes/savora.png",
+    },
+    Savora_con_miel: {
+      price: 70,
+      image: "../img/ingredientes/savora_miel.png",
+    },
+    Salsa_picante: {
+      price: 70,
+      image: "../img/ingredientes/salsa_picante.png",
+    },
+    Pesto: {
+      price: 80,
+      image: "../img/ingredientes/pesto.png",
+    },
+  };
+
+  options = {
+    pan: {
+      maxAmountToChoose: {
+        big: 1,
+        normal: 1,
+      },
+      options: [
+        "Trigo",
+        "Semillas",
+        "Focaccia",
+        "Ciabatta",
+        "Salvado",
+        "Sin_gluten",
+      ],
+    },
+
+    proteina: {
+      maxAmountToChoose: {
+        big: 2,
+        normal: 1,
+      },
+      options: ["Hummus", "Carne_vacuna", "Pollo", "Atun", "Pavo"],
+    },
+
+    queso: {
+      maxAmountToChoose: {
+        big: 2,
+        normal: 1,
+      },
+      options: ["Cheddar", "Mozzarella", "Mar_del_plata", "Queso_crema"],
+    },
+
+    agregado: {
+      maxAmountToChoose: {
+        big: 3,
+        normal: 2,
+      },
+      options: ["Lechuga", "Tomate", "Pimientos", "Avocado", "Bacon"],
+    },
+
+    aderezo: {
+      maxAmountToChoose: {
+        big: 3,
+        normal: 2,
+      },
+      options: [
+        "Mayonesa",
+        "Savora",
+        "Savora_con_miel",
+        "Salsa_picante",
+        "Pesto",
+      ],
+    },
+  };
+
+  localStorage.setItem("priceList", JSON.stringify(prices));
+  localStorage.setItem("optionsList", JSON.stringify(options));
+})();
