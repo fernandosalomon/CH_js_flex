@@ -78,13 +78,13 @@ SandwichMania/
 - Punto de montaje para la interfaz dinámica del simulador.
 
 ### JavaScript
-- **`src/app.js`**
+- **`js/app.js`**
   - Controla la lógica del simulador.
   - Carga dinámica de ingredientes en el DOM.
   - Validación de selección de ingredientes.
   - Control del estado de los botones.
   - Cálculo del precio sin IVA en tiempo real.
-- **`src/localStorage.js`**
+- **`js/localStorage.js`**
   - Define categorías, precios e imágenes de ingredientes.
   - Carga inicial de datos en `localStorage`.
 
