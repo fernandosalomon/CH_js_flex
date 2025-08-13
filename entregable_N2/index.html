@@ -202,9 +202,22 @@
             </div>
           </div>
           <div class="modal-body">
-            <p class="m-0" id="precioSinIVA">Precio sin impuestos: $0</p>
-            <p class="m-0" id="IVA">IVA(21%): $0</p>
-            <p class="m-0" id="precioConIVA">Total a pagar: $0</p>
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th scope="row">Precio sin impuestos</th>
+                  <td id="precioSinIVA"></td>
+                </tr>
+                <tr>
+                  <th scope="row">IVA(21%)</th>
+                  <td id="IVA"></td>
+                </tr>
+                <tr>
+                  <th scope="row">Total a pagar</th>
+                  <td id="precioConIVA"></td>
+                </tr>
+             </tbody>
+            </table>
           </div>
           <div class="modal-footer d-flex align-items-center">
             <div class="btn-group">
@@ -250,7 +263,7 @@
             </div>
           </div>
           <div class="modal-body text-center">
-            <p>
+            <p class="fs-3">
               Por favor, acercate al mostrador para realizar el pago y disfrutar
               de tu sándwich.
             </p>

@@ -59,11 +59,11 @@ function getTotalPrice() {
   const IVA = document.getElementById("IVA");
   const priceWIVA = document.getElementById("precioConIVA");
 
-  priceWoutIVA.innerText = `Precio sin impuestos: $${totalPrice}`;
+  priceWoutIVA.innerText = `$${parseFloat(totalPrice).toFixed(2)}`;
 
-  IVA.innerText = `IVA(21%): $${totalPrice * 0.21}`;
+  IVA.innerText = `$${(totalPrice * 0.21).toFixed(2)}`;
 
-  priceWIVA.innerText = `Total a pagar: $${totalPrice * 1.21}`;
+  priceWIVA.innerText = `$${(totalPrice * 1.21).toFixed(2)}`;
 
   return totalPrice;
 }
@@ -147,7 +147,7 @@ function setSandwitchSize(option) {
   sandwitchSize = option;
   setSessionStorage();
 
-  //Esto actualiza los titulos
+  //Actualizar los titulos cuando cambio el tamaño de sandwitch
   const sectionTitles = document.querySelectorAll("#sectionTitle");
 
   sectionTitles.forEach((title, index) => {
