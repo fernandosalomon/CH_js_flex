@@ -57,6 +57,7 @@ El objetivo es ofrecer una experiencia interactiva en la que el usuario pueda ar
 
 ## 🛠️ Estructura del proyecto
 
+```
 SandwichMania/
 ├── index.html # Página principal
 ├── js/
@@ -66,6 +67,7 @@ SandwichMania/
 │ └── style.css # Framework CSS Bootstrap
 ├── img/
 └── README.md
+```
 
 ---
 
