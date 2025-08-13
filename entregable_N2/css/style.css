@@ -7,6 +7,39 @@
   font-family: "Montserrat", sans-serif;
 }
 
+.text {
+  font-size: 1.2rem;
+}
+
+.modal {
+  max-height: 90vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.modal-body {
+  max-height: calc(90vh - 200px);
+  overflow-y: auto;
+}
+
+.modal-footer {
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  height: 100px;
+  min-height: 100px;
+}
+
+.btn-group {
+  display: flex;
+  width: 100%;
+  gap: 12px;
+}
+
+.btnBuy {
+  flex-grow: 1;
+}
+
 .header-container {
   display: flex;
   align-items: center;
@@ -29,6 +62,8 @@
   margin-right: 12px;
   cursor: pointer;
   position: relative;
+  width: 130px;
+  min-width: 130px;
 }
 
 .option-card_selected {
@@ -69,7 +104,6 @@
   height: 36px;
   border-radius: 50%;
   margin: 8px;
-  background-color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,25 +111,6 @@
   font-size: 1.4rem;
   box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
   transition: all 250ms;
-}
-
-.btnAdd:hover,
-.btnRemove:hover,
-.button-5:focus {
-  background-color: red;
-  color: white;
-}
-
-.btnAdd:hover,
-.btnRemove:hover {
-  transform: translateY(-1px);
-}
-
-.btnAdd:active,
-.btnRemove:active {
-  background-color: red;
-  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
-  transform: translateY(0);
 }
 
 .sandwitchSizeBtn,

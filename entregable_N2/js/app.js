@@ -157,7 +157,44 @@ options = {
 };
 
 let userCH = [];
-let sandwitchSize = "";
+let sandwitchSize = 0;
+let totalPrice = 0;
+let isUserSandwitchReady = false;
+
+function isSandwitchReady() {
+  isNotReady = false;
+  for (const [key, value] of Object.entries(options)) {
+    if (
+      remainingChoosings(
+        value.options,
+        value.maxAmountToChoose[sandwitchSize == 0 ? "normal" : "big"]
+      ) != 0
+    ) {
+      isReady = false;
+    } else {
+      isReady = true;
+    }
+  }
+
+  const buyBtn = document.getElementById("btnBuy");
+
+  if (isReady) {
+    buyBtn.classList.remove("disabled");
+  } else {
+    buyBtn.classList = "btn btn-danger btnBuy disabled";
+  }
+
+  return isReady;
+}
+
+function getTotalPrice() {
+  let totalPrice = userCH.reduce((acc, val) => (acc += prices[val].price), 0);
+
+  const totalPriceTextBox = document.getElementById("totalPrice");
+  totalPriceTextBox.innerText = `Precio total: $${totalPrice}`;
+
+  return totalPrice;
+}
 
 function remainingChoosings(options, max) {
   let nChOptions = userCH
@@ -193,6 +230,9 @@ function addItem(ingredient, section) {
       btn.classList.add("disabled");
     }
   }
+
+  totalPrice = getTotalPrice();
+  isSandwitchReady();
 }
 
 function removeItem(ingredient, section) {
@@ -217,14 +257,34 @@ function removeItem(ingredient, section) {
   for (btn of section.querySelectorAll(".btnAdd")) {
     btn.classList.remove("disabled");
   }
+
+  totalPrice = getTotalPrice();
+  isSandwitchReady();
 }
 
 //Seleccionar el tamaño del sandwitch
 
 const sandwitchSizeBtnGrp = document.getElementById("sandwitchSizeBtnGrp");
+sandwitchSizeBtnGrp
+  .querySelectorAll(".btn")
+  [sandwitchSize].classList.add("sandwitchSizeBtn_active");
 
 function setSandwitchSize(option) {
   sandwitchSize = option;
+
+  //Esto actualiza los titulos
+  const sectionTitles = document.querySelectorAll("#sectionTitle");
+
+  sectionTitles.forEach((title, index) => {
+    const entry = Object.entries(options);
+    const name = entry[index][0];
+    const max =
+      entry[index][1].maxAmountToChoose[sandwitchSize == 0 ? "normal" : "big"];
+    title.innerText = `
+    Elegí tu/s opcion/es de ${name} (Puedes elegir hasta ${max} opcion/es)
+  `;
+  });
+  //-----------------------------
 
   for (
     let i = 0;
@@ -253,9 +313,12 @@ for (const [key, value] of Object.entries(options)) {
 
   //Titulo de la opción
   const title = document.createElement("h2");
-  title.classList.add("mb-4");
+  title.classList.add("mb-2", "fs-4");
+  title.id = "sectionTitle";
   title.innerText = `
-    Elegí tu/s opcion/es de ${key} (Puedes elegir hasta ${value.maxAmountToChoose["big"]} opcion/es)
+    Elegí tu/s opcion/es de ${key} (Puedes elegir hasta ${
+    value.maxAmountToChoose[sandwitchSize == 0 ? "normal" : "big"]
+  } opcion/es)
   `;
   wrapper.appendChild(title);
 
@@ -277,13 +340,13 @@ for (const [key, value] of Object.entries(options)) {
     );
     cardWrapper.id = ing;
     cardWrapper.innerHTML = `
-      <img src=${prices[ing].image} class="card-img-top" alt="${ing}" style="min-height: 7rem;">
+      <img src=${prices[ing].image} class="card-img-top" alt="${ing}" style="min-height: 150px;">
       <div class="card-body">
         <h5 class="option-title">${ing}</h5>
         <p class="option-prize">$${prices[ing].price}</p>
         <div class='d-flex justify-content-center'>
-            <button class='btn btnAdd' onClick='(() => addItem(${ing}, ${key}))()'>+</button>
-            <button class='btn btnRemove disabled' onClick='(() => removeItem(${ing}, ${key}))()'>-</button>
+            <button class='btn btn-light btnAdd' onClick='addItem(${ing}, ${key})'>+</button>
+            <button class='btn btn-light btnRemove disabled' onClick='removeItem(${ing}, ${key})'>-</button>
         </div>
       </div>
     `;

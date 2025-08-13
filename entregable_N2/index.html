@@ -45,7 +45,7 @@
             </div>
             <div class="container" id="optionsWrapper">
               <div class="container" id="sandwitchSizeContainer">
-                <h3>Elige el tamaño de tu sandwitch</h3>
+                <h4 class="fs-4 my-3">Elige el tamaño de tu sandwitch:</h4>
                 <div
                   id="sandwitchSizeBtnGrp"
                   class="d-flex justify-content-center gap-3"
@@ -90,6 +90,21 @@
               <div class="container" id="queso"></div>
               <div class="container" id="agregado"></div>
               <div class="container" id="aderezo"></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <p class="text" id="totalPrice">Precio total: $0</p>
+            <div class="btn-group">
+              <button class="btn btn-danger btnBuy disabled" id="btnBuy">
+                Comprar
+              </button>
+              <button
+                class="btn btn-light btnCancel"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                Cancelar
+              </button>
             </div>
           </div>
         </div>
