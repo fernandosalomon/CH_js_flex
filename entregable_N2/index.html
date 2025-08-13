@@ -13,15 +13,72 @@
     />
     <link rel="stylesheet" href="./css/style.css" />
   </head>
-  <body>
-    <button
-      type="button"
-      class="btn btn-primary"
-      data-bs-toggle="modal"
-      data-bs-target="#chooseIngredientsModal"
+  <body class="d-flex flex-column justify-content-between overflow-hidden">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img
+            src="./img/big.png"
+            alt="Logo"
+            width="30"
+            height="24"
+            class="d-inline-block align-text-top"
+          />
+          SandwitchMania
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Sobre nosotros</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Ordenar</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container d-flex flex-column align-items-center gap-3">
+      <img src="./img/big.png" style="width: 350px" />
+      <h1 class="fs-1">SandwitchMania</h1>
+      <p class="m-0 text-center fs-5">
+        En SandwichMania sabemos que tú eres un experto en sándwiches, así que
+        te dejamos que los armes como más te guste. Nuestro simulador te guiará
+        paso a paso para que elijas todos los ingredientes de tu sándwich
+        perfecto
+      </p>
+      <button
+        type="button"
+        class="btn btn-danger btn-lg fw-bold mt-3"
+        data-bs-toggle="modal"
+        data-bs-target="#chooseIngredientsModal"
+      >
+        Realizar un pedido
+      </button>
+    </main>
+
+    <footer
+      class="d-flex justify-content-between align-items-center px-3 bg-light position-fixed bottom-0 w-100"
     >
-      Launch demo modal
-    </button>
+      <p class="m-0 py-3">Segunda entrega del curso JS Flex de CoderHouse</p>
+      <p class="m-0 py-3">Fernando F. Salomón</p>
+      <p class="m-0 py-3">Todos los derechos reservados.</p>
+    </footer>
 
     <!-- Modal -->
     <div

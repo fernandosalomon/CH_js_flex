@@ -11,6 +11,10 @@
   font-size: 1.2rem;
 }
 
+main {
+  height: calc(100vh - 96px);
+}
+
 .modal {
   max-height: 90vh;
   overflow-y: scroll;
@@ -40,6 +44,11 @@
   flex-grow: 1;
 }
 
+.card-img-top {
+  height: 150px;
+  max-height: 150px;
+}
+
 .header-container {
   display: flex;
   align-items: center;
@@ -66,6 +75,10 @@
   min-width: 130px;
 }
 
+.card-body {
+  padding: 8px !important;
+}
+
 .option-card_selected {
   background-color: #ca3f40;
   width: 7rem !important;
@@ -76,11 +89,13 @@
   font-size: 1rem;
   color: #fff;
   min-height: 40px;
+  margin: 0 !important;
 }
 
 .option-prize {
   font-size: 1rem;
   color: #fff;
+  margin: 0 !important;
 }
 
 .unitMeter {

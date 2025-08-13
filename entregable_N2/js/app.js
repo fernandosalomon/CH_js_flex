@@ -1,5 +1,5 @@
 const prices = {
-  Trigo_blanco: {
+  Trigo: {
     price: 120,
     image: "../img/ingredientes/pan_trigo.png",
   },
@@ -108,7 +108,7 @@ options = {
       normal: 1,
     },
     options: [
-      "Trigo_blanco",
+      "Trigo",
       "Semillas",
       "Focaccia",
       "Ciabatta",
