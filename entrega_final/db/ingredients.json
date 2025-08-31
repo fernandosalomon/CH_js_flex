@@ -1,0 +1,152 @@
+[
+    {
+      "id": 1,  
+      "name": "Trigo",  
+      "price": 120,
+      "image": "../img/ingredientes/pan_trigo.png"
+    },
+    {
+      "id": 2,
+      "name": "Semillas",  
+      "price": 130,
+      "image": "../img/ingredientes/pan_cereales.png"
+    },
+    {
+      "id": 3,
+      "name": "Focaccia",
+      "price": 150,
+      "image": "../img/ingredientes/focaccia.png"
+    },
+    {
+      "id": 4,
+      "name": "Ciabatta",  
+      "price": 150,
+      "image": "../img/ingredientes/ciabatta.png"
+    },
+    {
+      "id": 5,
+      "name": "Salvado",
+      "price": 130,
+      "image": "../img/ingredientes/salvado.png"
+    },
+    {
+      "id": 6,
+      "name": "Sin_gluten",  
+      "price": 140,
+      "image": "../img/ingredientes/sin_gluten.png"
+    },
+    {
+      "id": 7,
+      "name": "Hummus",
+      "price": 1008,
+      "image": "../img/ingredientes/hummus.png"
+    },
+    {
+      "id": 8,
+      "name": "Carne_vacuna", 
+      "price": 965,
+      "image": "../img/ingredientes/carne_vacuna.png"
+    },
+    {
+      "id": 9,
+      "name": "Pollo",
+      "price": 297,
+      "image": "../img/ingredientes/pollo.png"
+    },
+    {
+      "id": 10,
+      "name": "Atun",
+      "price": 792,
+      "image": "../img/ingredientes/atun.png"
+    },
+    {
+      "id": 11,
+      "name": "Pavo",  
+      "price": 1240,
+      "image": "../img/ingredientes/pavo.png"
+    },
+    {
+      "id": 12,
+      "name": "Cheddar",
+      "price": 210,
+      "image": "../img/ingredientes/cheddar.png"
+    },
+    {
+      "id": 13,
+      "name": "Mozzarella",
+      "price": 210,
+      "image": "../img/ingredientes/mozzarella.png"
+    },
+    {
+      "id": 14,
+      "name": "Mar_del_plata",
+      "price": 240,
+      "image": "../img/ingredientes/mar_del_plata.png"
+    },
+    {
+      "id": 15,
+      "name": "Queso_crema",  
+      "price": 150,
+      "image": "../img/ingredientes/queso_crema.png"
+    },
+    {
+      "id": 16,
+      "name": "Lechuga",
+      "price": 100,
+      "image": "../img/ingredientes/lechuga.png"
+    },
+    {
+      "id": 17,
+      "name": "Tomate",  
+      "price": 100,
+      "image": "../img/ingredientes/tomate.png"
+    },
+    {
+      "id": 18,
+      "name": "Pimientos", 
+      "price": 200,
+      "image": "../img/ingredientes/pimientos.png"
+    },
+    {
+      "id": 19,
+      "name": "Avocado", 
+      "price": 800,
+      "image": "../img/ingredientes/avocado.png"
+    },
+    {
+      "id": 20,
+      "name": "Bacon",
+      "price": 1500,
+      "image": "../img/ingredientes/bacon.png"
+    },
+    {
+      "id": 21,
+      "name": "Mayonesa",  
+      "price": 50,
+      "image": "../img/ingredientes/mayonesa.png"
+    },
+    {
+      "id": 22,
+      "name": "Savora",  
+      "price": 50,
+      "image": "../img/ingredientes/savora.png"
+    },
+    {
+      "id": 23,
+      "name": "Savora_con_miel",   
+      "price": 70,
+      "image": "../img/ingredientes/savora_miel.png"
+    },
+    {
+      "id": 24,
+      "name": "Salsa_picante", 
+      "price": 70,
+      "image": "../img/ingredientes/salsa_picante.png"
+    },
+    {
+      "id": 25,
+      "name": "Pesto",
+      "price": 80,
+      "image": "../img/ingredientes/pesto.png"
+    }
+]
