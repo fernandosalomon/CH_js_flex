@@ -28,7 +28,7 @@
           type="button"
           class="btn btn-danger fw-bold"
           data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
+          data-bs-target="#ingredientsOptionModal"
         >
           Realizar un pedido
         </button>
@@ -48,7 +48,7 @@
         type="button"
         class="btn btn-danger btn-lg fw-bold mt-3"
         data-bs-toggle="modal"
-        data-bs-target="#chooseIngredientsModal"
+        data-bs-target="#ingredientsOptionModal"
       >
         Realizar un pedido
       </button>
@@ -62,34 +62,39 @@
       <p class="m-0 py-3">Todos los derechos reservados.</p>
     </footer>
 
+    <!-- Modal -->
     <div
       class="modal fade"
-      id="exampleModal"
+      id="ingredientsOptionModal"
       tabindex="-1"
-      aria-labelledby="exampleModalLabel"
+      aria-labelledby="ingredientOptions"
       aria-hidden="true"
     >
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+          <div class="modal-body">
+            <div class="header-container d-flex justify-content-between">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Arma tu sandwith
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+
+            
+            <div class="container" id="sandwitchSize"></div>
+
+            <div class="container" id="pan"></div>
+            <div class="container" id="proteina"></div>
+            <div class="container" id="queso"></div>
+            <div class="container" id="agregado"></div>
+            <div class="container" id="aderezo"></div>
+            
           </div>
-          <div class="modal-body">...</div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>

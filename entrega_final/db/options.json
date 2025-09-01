@@ -1,0 +1,54 @@
+{
+   "pan": {
+      "maxAmountToChoose": {
+        "big": 1,
+        "normal": 1
+      },
+      "options": [
+        "Trigo",
+        "Semillas",
+        "Focaccia",
+        "Ciabatta",
+        "Salvado",
+        "Sin_gluten"
+      ]
+    },
+
+    "proteina": {
+      "maxAmountToChoose": {
+        "big": 2,
+        "normal": 1
+      },
+      "options": ["Hummus", "Carne_vacuna", "Pollo", "Atun", "Pavo"]
+    },
+
+    "queso": {
+      "maxAmountToChoose": {
+        "big": 2,
+        "normal": 1
+      },
+      "options": ["Cheddar", "Mozzarella", "Mar_del_plata", "Queso_crema"]
+    },
+
+    "agregado": {
+      "maxAmountToChoose": {
+        "big": 3,
+        "normal": 2
+      },
+      "options": ["Lechuga", "Tomate", "Pimientos", "Avocado", "Bacon"]
+    },
+
+    "aderezo": {
+      "maxAmountToChoose": {
+        "big": 3,
+        "normal": 2
+      },
+      "options": [
+        "Mayonesa",
+        "Savora",
+        "Savora_con_miel",
+        "Salsa_picante",
+        "Pesto"
+      ]
+    }
+}
