@@ -103,6 +103,29 @@
               </div>
             </div>
           </div>
+
+           <div class="modal-footer">
+            <p class="text" id="totalPrice">Precio total: $0</p>
+            <div class="btn-group">
+              <button
+                class="btn btn-danger btnBuy disabled"
+                id="btnBuy"
+                data-bs-toggle="modal"
+                data-bs-target="#paymentModal"
+              >
+                Comprar
+              </button>
+              <button
+                class="btn btn-light btnCancel"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                onClick="() => sessionStorage.clear()"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+
           </div>
         </div>
       </div>

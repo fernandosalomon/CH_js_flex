@@ -81,6 +81,13 @@ async function addSandwitchOptions() {
         </div>
       `;
 
+        const ingredientAmount = document.createElement("div");
+        ingredientAmount.id = `um-${id}`;
+        ingredientAmount.innerHTML = "x2";
+        ingredientAmount.classList.add("ingredient-amount");
+
+        card.appendChild(ingredientAmount);
+
         options.appendChild(card);
       });
       section.appendChild(options);
