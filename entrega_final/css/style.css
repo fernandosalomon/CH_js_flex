@@ -19,3 +19,42 @@
   width: 7rem !important;
   border-radius: 14px !important;
 }
+
+.option-card {
+  background-color: #af757b;
+  border-radius: 14px;
+  padding: 8px;
+  margin-right: 12px;
+  cursor: pointer;
+  position: relative;
+  width: 130px;
+  min-width: 130px;
+}
+
+.option-title {
+  font-size: 1rem;
+  color: #fff;
+  min-height: 40px;
+  margin: 0 !important;
+}
+
+.option-prize {
+  font-size: 1rem;
+  color: #fff;
+  margin: 0 !important;
+}
+
+.btnAdd,
+.btnRemove {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.4rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  transition: all 250ms;
+}
