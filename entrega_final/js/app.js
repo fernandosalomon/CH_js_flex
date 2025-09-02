@@ -50,7 +50,7 @@ async function addSandwitchOptions() {
       section.appendChild(title);
 
       const options = document.createElement("div");
-      options.classList.add("row");
+      options.classList.add("row", "mx-auto");
 
       value.optionsID.map((id) => {
         const option = ingredients.find((ing) => ing.id == id);
