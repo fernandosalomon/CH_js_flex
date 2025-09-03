@@ -14,6 +14,56 @@ sizeBig.addEventListener("click", () => {
   sizeBig.classList.add("size-btn_selected");
 });
 
+//THE SANDWITCH SECTION
+
+let userSandwitch = [];
+
+function updateBadge(ingredientID) {
+  const ingredientBadge = document.querySelector(`#um-${ingredientID}`);
+
+  let ingredientAmount = userSandwitch.filter(
+    (ing) => ing == ingredientID
+  ).length;
+
+  if (ingredientAmount <= 0) {
+    ingredientBadge.classList.remove("d-flex");
+    ingredientBadge.classList.add("d-none");
+  } else {
+    ingredientBadge.innerText = `x${ingredientAmount}`;
+    ingredientBadge.classList.remove("d-none");
+    ingredientBadge.classList.add("d-flex");
+  }
+}
+
+function addIngredient(ingredientID) {
+  userSandwitch.push(ingredientID);
+  updateBadge(ingredientID);
+  toggleRemoveBtn(ingredientID);
+}
+
+function removeIngredient(ingredientID) {
+  const ingredientIndex = userSandwitch.findIndex((id) => id == ingredientID);
+
+  if (ingredientIndex != -1) {
+    userSandwitch.splice(ingredientIndex, 1);
+    updateBadge(ingredientID);
+    toggleRemoveBtn(ingredientID);
+  }
+}
+
+function toggleRemoveBtn(ingredientID) {
+  const ingredientAmount = userSandwitch.filter(
+    (id) => id == ingredientID
+  ).length;
+  const removeBtn = document.querySelector(`#removeIng${ingredientID}Btn`);
+
+  if (ingredientAmount == 0) {
+    removeBtn.classList.add("disabled");
+  } else {
+    removeBtn.classList.remove("disabled");
+  }
+}
+
 async function fetchData(path) {
   try {
     const res = await fetch(path);
@@ -75,8 +125,8 @@ async function addSandwitchOptions() {
           <h5 class="option-title">${option.name}</h5>
           <p class="option-prize">$${option.price}</p>
           <div class='d-flex justify-content-center'>
-            <button class='btn btn-light btnAdd'>+</button>
-            <button class='btn btn-light btnRemove disabled'>-</button>
+            <button class='btn btn-light btnAdd' id="addIng${option.id}Btn" onClick='addIngredient(${option.id})'>+</button>
+            <button class='btn btn-light btnRemove disabled' id="removeIng${option.id}Btn" onClick='removeIngredient(${option.id})'>-</button>
         </div>
         </div>
       `;
@@ -84,7 +134,7 @@ async function addSandwitchOptions() {
         const ingredientAmount = document.createElement("div");
         ingredientAmount.id = `um-${id}`;
         ingredientAmount.innerHTML = "x2";
-        ingredientAmount.classList.add("ingredient-amount");
+        ingredientAmount.classList.add("ingredient-amount", "d-none");
 
         card.appendChild(ingredientAmount);
 
