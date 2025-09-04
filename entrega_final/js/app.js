@@ -35,10 +35,17 @@ function updateBadge(ingredientID) {
   }
 }
 
-function addIngredient(ingredientID) {
-  userSandwitch.push(ingredientID);
-  updateBadge(ingredientID);
-  toggleRemoveBtn(ingredientID);
+async function addIngredient(ingredientID) {
+  const ingredients = await fetchData("./db/ingredients.json");
+  const category = ingredients.find((ing) => ing.id == ingredientID).category;
+  const isFull = await isCategoryFull(category);
+
+  if (!isFull) {
+    userSandwitch.push(ingredientID);
+    updateBadge(ingredientID);
+    toggleAddBtn(ingredientID);
+    toggleRemoveBtn(ingredientID);
+  }
 }
 
 function removeIngredient(ingredientID) {
@@ -47,6 +54,7 @@ function removeIngredient(ingredientID) {
   if (ingredientIndex != -1) {
     userSandwitch.splice(ingredientIndex, 1);
     updateBadge(ingredientID);
+    toggleAddBtn(ingredientID);
     toggleRemoveBtn(ingredientID);
   }
 }
@@ -64,6 +72,21 @@ function toggleRemoveBtn(ingredientID) {
   }
 }
 
+async function toggleAddBtn(ingredientID) {
+  const options = await fetchData("./db/options.json");
+  const ingredients = await fetchData("./db/ingredients.json");
+  const category = ingredients.find((ing) => ing.id == ingredientID).category;
+
+  const isFull = await isCategoryFull(category);
+
+  options[category].optionsID.map((id) => {
+    const addBtn = document.querySelector(`#addIng${id}Btn`);
+    isFull
+      ? addBtn.classList.add("disabled")
+      : addBtn.classList.remove("disabled");
+  });
+}
+
 async function fetchData(path) {
   try {
     const res = await fetch(path);
@@ -76,13 +99,46 @@ async function fetchData(path) {
   }
 }
 
+async function isCategoryFull(category) {
+  const options = await fetchData("./db/options.json");
+  const isValid = category in options;
+  try {
+    if (!isValid) {
+      throw new Error("La categoria no es valida.");
+    }
+
+    let nElementsInCategory = 0;
+    userSandwitch.map(
+      (val) =>
+        options[category].optionsID.includes(val) && nElementsInCategory++
+    );
+
+    const nMaxElements =
+      options[category].maxAmountToChoose[size == 1 ? "big" : "normal"];
+
+    return nElementsInCategory >= nMaxElements;
+  } catch (error) {
+    console.error("Error: ", error);
+  }
+}
+
 async function addSandwitchOptions() {
   try {
     const options = await fetchData("./db/options.json");
-    console.log(options);
+    if (!options) {
+      throw new Error(
+        "No se pudo recuperar la información de la base de datos."
+      );
+    }
 
     ingredients = await fetchData("./db/ingredients.json");
-    console.log(ingredients);
+    if (!ingredients) {
+      throw new Error(
+        "No se pudo recuperar la información de la base de datos."
+      );
+    }
+
+    console.log(await isCategoryFull("aderezo"));
 
     const optionContainer = document.querySelector("#optionsContainer");
 
