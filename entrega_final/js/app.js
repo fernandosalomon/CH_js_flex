@@ -172,12 +172,12 @@ async function addItemToCart() {
       currentCart.push(userSandwitch);
       localStorage.setItem("cart", JSON.stringify(currentCart));
     }
-    userSandwitch = [];
 
     const myModalEl = document.querySelector("#ingredientsOptionModal");
     const modal = bootstrap.Modal.getInstance(myModalEl);
     modal.hide();
 
+    userSandwitch = [];
     renderModal();
   }
 }
