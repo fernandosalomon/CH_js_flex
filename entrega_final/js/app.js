@@ -1,4 +1,5 @@
 const sizeNormal = document.querySelector("#sizeNormal");
+sizeNormal.classList.add("size-btn_selected");
 const sizeBig = document.querySelector("#sizeBig");
 let size = 0;
 
@@ -17,6 +18,32 @@ sizeBig.addEventListener("click", () => {
 //THE SANDWITCH SECTION
 
 let userSandwitch = [];
+
+async function getCurrentPrice() {
+  const ingredients = await fetchData("./db/ingredients.json");
+  let price = 0;
+  userSandwitch.forEach((ingID) => {
+    const ingredientPrice = ingredients.find((ing) => ing.id == ingID).price;
+    price += ingredientPrice;
+  });
+  return price;
+}
+
+async function updatePrice() {
+  const priceElement = document.querySelector("#totalPrice");
+  const price = await getCurrentPrice();
+  priceElement.innerText = `$${price}`;
+}
+
+async function isSandwitchReady() {
+  const options = await fetchData("./db/options.json");
+  const categoryList = Object.keys(options);
+  let isReady = false;
+  for (category of categoryList) {
+    isReady = (await isCategoryFull(category)) ? true : false;
+  }
+  return isReady;
+}
 
 function updateBadge(ingredientID) {
   const ingredientBadge = document.querySelector(`#um-${ingredientID}`);
@@ -45,10 +72,17 @@ async function addIngredient(ingredientID) {
     updateBadge(ingredientID);
     toggleAddBtn(ingredientID);
     toggleRemoveBtn(ingredientID);
+    updatePrice();
+    isSandwitchReady();
+  }
+
+  const buyBtn = document.querySelector("#btnBuy");
+  if (await isSandwitchReady()) {
+    buyBtn.classList.remove("disabled");
   }
 }
 
-function removeIngredient(ingredientID) {
+async function removeIngredient(ingredientID) {
   const ingredientIndex = userSandwitch.findIndex((id) => id == ingredientID);
 
   if (ingredientIndex != -1) {
@@ -56,6 +90,11 @@ function removeIngredient(ingredientID) {
     updateBadge(ingredientID);
     toggleAddBtn(ingredientID);
     toggleRemoveBtn(ingredientID);
+
+    const buyBtn = document.querySelector("#btnBuy");
+    if (!(await isSandwitchReady())) {
+      buyBtn.classList.add("disabled");
+    }
   }
 }
 
@@ -122,7 +161,28 @@ async function isCategoryFull(category) {
   }
 }
 
-async function addSandwitchOptions() {
+async function addItemToCart() {
+  if (await isSandwitchReady()) {
+    const currentCart = JSON.parse(localStorage.getItem("cart"));
+    if (!currentCart) {
+      const cart = [];
+      cart.push(userSandwitch);
+      localStorage.setItem("cart", JSON.stringify(cart));
+    } else {
+      currentCart.push(userSandwitch);
+      localStorage.setItem("cart", JSON.stringify(currentCart));
+    }
+    userSandwitch = [];
+
+    const myModalEl = document.querySelector("#ingredientsOptionModal");
+    const modal = bootstrap.Modal.getInstance(myModalEl);
+    modal.hide();
+
+    renderModal();
+  }
+}
+
+async function renderModal() {
   try {
     const options = await fetchData("./db/options.json");
     if (!options) {
@@ -137,8 +197,6 @@ async function addSandwitchOptions() {
         "No se pudo recuperar la información de la base de datos."
       );
     }
-
-    console.log(await isCategoryFull("aderezo"));
 
     const optionContainer = document.querySelector("#optionsContainer");
 
@@ -204,4 +262,4 @@ async function addSandwitchOptions() {
   }
 }
 
-addSandwitchOptions();
+renderModal();
