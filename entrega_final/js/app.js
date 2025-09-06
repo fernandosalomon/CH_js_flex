@@ -1,22 +1,5 @@
-const sizeNormal = document.querySelector("#sizeNormal");
-sizeNormal.classList.add("size-btn_selected");
-const sizeBig = document.querySelector("#sizeBig");
-let size = 0;
-
-sizeNormal.addEventListener("click", () => {
-  size = 0;
-  sizeNormal.classList.add("size-btn_selected");
-  sizeBig.classList.remove("size-btn_selected");
-});
-
-sizeBig.addEventListener("click", () => {
-  size = 1;
-  sizeNormal.classList.remove("size-btn_selected");
-  sizeBig.classList.add("size-btn_selected");
-});
-
 //THE SANDWITCH SECTION
-
+let size = 0;
 let userSandwitch = [];
 
 async function getCurrentPrice() {
@@ -179,6 +162,23 @@ async function addItemToCart() {
   }
 }
 
+async function openModal() {
+  const modal = new bootstrap.Modal("#ingredientsOptionModal");
+  await renderModal();
+  modal.show();
+}
+
+function closeModal() {
+  const myModalEl = document.querySelector("#ingredientsOptionModal");
+  const modal = bootstrap.Modal.getInstance(myModalEl);
+  modal.hide();
+
+  userSandwitch = [];
+
+  const sections = document.querySelectorAll("#ingredientOptionsDivId");
+  sections.forEach((section) => section.remove());
+}
+
 async function renderModal() {
   try {
     const options = await fetchData("./db/options.json");
@@ -196,6 +196,41 @@ async function renderModal() {
     }
 
     const optionContainer = document.querySelector("#optionsContainer");
+
+    const sandwitchSizeWrapper = document.createElement("div");
+    sandwitchSizeWrapper.id = "sandwitchSize";
+    sandwitchSizeWrapper.classList.add("container");
+    sandwitchSizeWrapper.innerHTML = `
+    <h4 class="fs-4 my-3">Elige el tamaño de tu sandwitch:</h4>
+    <div class="d-flex align-items-center justify-content-center gap-3">
+      <div id="sizeNormal" class="d-flex flex-column align-items-center size-btn">
+        <img src="./img/ingredients/normal.png" alt="Tamaño Normal" style="height: 140px"/>
+        <h4>Normal</h4>
+      </div>
+
+      <div id="sizeBig" class="d-flex flex-column align-items-center size-btn">
+        <img src="./img/ingredients/big.png" alt="Tamaño Grande" style="height: 140px"/>
+        <h4>Grande</h4>  
+      </div>
+    </div>
+    `;
+    optionContainer.appendChild(sandwitchSizeWrapper);
+
+    const sizeNormal = document.querySelector("#sizeNormal");
+    sizeNormal.classList.add("size-btn_selected");
+    const sizeBig = document.querySelector("#sizeBig");
+
+    sizeNormal.addEventListener("click", () => {
+      size = 0;
+      sizeNormal.classList.add("size-btn_selected");
+      sizeBig.classList.remove("size-btn_selected");
+    });
+
+    sizeBig.addEventListener("click", () => {
+      size = 1;
+      sizeNormal.classList.remove("size-btn_selected");
+      sizeBig.classList.add("size-btn_selected");
+    });
 
     for (const [key, value] of Object.entries(options)) {
       const section = document.createElement("div");
@@ -254,27 +289,30 @@ async function renderModal() {
       });
       section.appendChild(options);
       optionContainer.appendChild(section);
+
+      const modalFooter = document.querySelector("#modalFooter");
+      modalFooter.innerHTML = `
+      <p class="text" id="totalPrice">Precio total: $0</p>
+      <div class="btn-group">
+        <button
+          class="btn btn-danger btnBuy disabled"
+          id="btnBuy"
+          onclick="addItemToCart()"
+        >
+          Comprar
+        </button>
+        <button
+          class="btn btn-light btnCancel"
+          id="closeModalBtn"
+        >
+          Cancelar
+        </button>
+      </div>
+      `;
     }
   } catch (error) {
     console.error("Error: ", error);
   }
-}
-
-async function openModal() {
-  const modal = new bootstrap.Modal("#ingredientsOptionModal");
-  await renderModal();
-  modal.show();
-}
-
-function closeModal() {
-  const myModalEl = document.querySelector("#ingredientsOptionModal");
-  const modal = bootstrap.Modal.getInstance(myModalEl);
-  modal.hide();
-
-  userSandwitch = [];
-
-  const sections = document.querySelectorAll("#ingredientOptionsDivId");
-  sections.forEach((section) => section.remove());
 }
 
 const openModalBtnGrp = document.querySelectorAll("#openModalBtn");

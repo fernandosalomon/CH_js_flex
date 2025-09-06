@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SandwitchMania - Arma tu sandwitch</title>
     <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-    crossorigin="anonymous"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
     />
     <link rel="stylesheet" href="./css/style.css" />
-    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
   </head>
   <body>
     <nav class="navbar bg-body-tertiary">
@@ -25,11 +25,7 @@
           />
           <p class="fs-2 p-0 m-0">SandwitchMania</p>
         </a>
-        <button
-          type="button"
-          class="btn btn-danger fw-bold"
-          id="openModalBtn"
-        >
+        <button type="button" class="btn btn-danger fw-bold" id="openModalBtn">
           Realizar un pedido
         </button>
       </div>
@@ -82,46 +78,9 @@
                 id="closeModalBtn"
               ></button>
             </div>
-
-            <div id="optionsContainer">
-              <div class="container " id="sandwitchSize">
-              <h4 class="fs-4 my-3">Elige el tamaño de tu sandwitch:</h4>
-              <div class="d-flex align-items-center justify-content-center gap-3">
-                <div id="sizeNormal" class="d-flex flex-column align-items-center size-btn">
-                  <img src="./img/ingredients/normal.png" alt="Tamaño Normal" style="height: 140px"/>
-                  <h4>Normal</h4>
-                </div>
-
-                <div id="sizeBig" class="d-flex flex-column align-items-center size-btn">
-                  <img src="./img/ingredients/big.png" alt="Tamaño Grande" style="height: 140px"/>
-                  <h4>Grande</h4>  
-                </div>
-              </div>
-
-              </div>
-            </div>
+            <div id="optionsContainer"></div>
           </div>
-
-           <div class="modal-footer">
-            <p class="text" id="totalPrice">Precio total: $0</p>
-            <div class="btn-group">
-              <button
-                class="btn btn-danger btnBuy disabled"
-                id="btnBuy"
-                onclick="addItemToCart()"
-              >
-                Comprar
-              </button>
-              <button
-                class="btn btn-light btnCancel"
-                id="closeModalBtn"
-              >
-                Cancelar
-              </button>
-            </div>
-          </div>
-
-          </div>
+          <div class="modal-footer" id="modalFooter"></div>
         </div>
       </div>
     </div>
