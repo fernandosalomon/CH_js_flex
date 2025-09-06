@@ -176,9 +176,6 @@ async function addItemToCart() {
     const myModalEl = document.querySelector("#ingredientsOptionModal");
     const modal = bootstrap.Modal.getInstance(myModalEl);
     modal.hide();
-
-    userSandwitch = [];
-    renderModal();
   }
 }
 
@@ -202,6 +199,7 @@ async function renderModal() {
 
     for (const [key, value] of Object.entries(options)) {
       const section = document.createElement("div");
+      section.id = "ingredientOptionsDivId";
 
       const title = document.createElement("h2");
       title.classList.add("mb-2", "fs-4");
@@ -262,4 +260,32 @@ async function renderModal() {
   }
 }
 
-renderModal();
+async function openModal() {
+  const modal = new bootstrap.Modal("#ingredientsOptionModal");
+  await renderModal();
+  modal.show();
+}
+
+function closeModal() {
+  const myModalEl = document.querySelector("#ingredientsOptionModal");
+  const modal = bootstrap.Modal.getInstance(myModalEl);
+  modal.hide();
+
+  userSandwitch = [];
+
+  const sections = document.querySelectorAll("#ingredientOptionsDivId");
+  sections.forEach((section) => section.remove());
+}
+
+const openModalBtnGrp = document.querySelectorAll("#openModalBtn");
+openModalBtnGrp.forEach((openModalBtn) =>
+  openModalBtn.addEventListener("click", openModal)
+);
+
+const closeModalBtn = document.querySelector("#closeModalBtn");
+closeModalBtn.addEventListener("click", closeModal);
+
+const closeModalBtnGrp = document.querySelectorAll("#closeModalBtn");
+closeModalBtnGrp.forEach((closeModalBtn) =>
+  closeModalBtn.addEventListener("click", closeModal)
+);
