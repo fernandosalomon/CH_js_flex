@@ -415,7 +415,7 @@ async function renderCart() {
       </button>
     `;
   } else {
-    mainWrapper.classList.remove("flex-column", "align-items-center", "gap-3");
+    mainWrapper.classList.remove("align-items-center", "gap-3");
     const leftPanel = document.createElement("div");
     leftPanel.id = "leftPanel";
     leftPanel.classList.add("d-flex", "left-panel", "flex-wrap", "gap-2");
@@ -433,7 +433,7 @@ async function renderCart() {
       sandwitchCard.id = index;
 
       sandwitchCard.innerHTML = `
-       <div class="row g-0">
+       <div class="row g-0 h-100">
           <div
             class="col-md-4 d-flex align-items-center justify-content-center bg-light"
           >
@@ -444,8 +444,8 @@ async function renderCart() {
               alt="Sandwitch image"
             />
           </div>
-          <div class="col-md-8">
-            <div class="card-body">
+          <div class="col-md-8 d-flex flex-column">
+            <div class="card-body flex-grow-1">
               <h4 class="card-title">Sandwitch ${index + 1}</h4>
               <h5 class="fs-5">Ingredientes:</h5>
               <p class="card-text" id="ingredientList">
