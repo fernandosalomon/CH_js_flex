@@ -303,10 +303,12 @@ async function renderOptions() {
         card.id = id;
 
         card.innerHTML = `
-        <img src=${option.image} class="card-img-top" alt=${option.name} style="min-height: 120px;">
-        <div class="card-body">
-          <h5 class="option-title">${option.name}</h5>
-          <p class="option-prize">$${option.price}</p>
+        <img src=${option.image} class="card-img-top" alt=${option.name} style="min-height: 120px; height: 120px;">
+        <div class="card-body d-flex flex-column">
+          <div class="flex-grow-1">
+            <h5 class="option-title">${option.name}</h5>
+            <p class="option-prize">$${option.price}</p>
+          </div>
           <div class='d-flex justify-content-center'>
             <button class='btn btn-light btnAdd' id="addIng${option.id}Btn" onClick='addIngredient(${option.id})'>+</button>
             <button class='btn btn-light btnRemove disabled' id="removeIng${option.id}Btn" onClick='removeIngredient(${option.id})'>-</button>
