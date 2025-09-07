@@ -109,3 +109,11 @@ main {
 .btnBuy {
   flex-grow: 1;
 }
+
+.left-panel {
+  flex-grow: 1;
+}
+
+.right-panel {
+  max-width: 30%;
+}

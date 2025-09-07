@@ -2,10 +2,10 @@
 let size = 0;
 let userSandwitch = [];
 
-async function getCurrentPrice() {
+async function getPrice(sandwitch) {
   const ingredients = await fetchData("./db/ingredients.json");
   let price = 0;
-  userSandwitch.forEach((ingID) => {
+  sandwitch.forEach((ingID) => {
     const ingredientPrice = ingredients.find((ing) => ing.id == ingID).price;
     price += ingredientPrice;
   });
@@ -14,7 +14,7 @@ async function getCurrentPrice() {
 
 async function updatePrice() {
   const priceElement = document.querySelector("#totalPrice");
-  const price = await getCurrentPrice();
+  const price = await getPrice(userSandwitch);
   priceElement.innerText = `$${price}`;
 }
 
@@ -160,10 +160,13 @@ async function addItemToCart() {
     const myModalEl = document.querySelector("#ingredientsOptionModal");
     const modal = bootstrap.Modal.getInstance(myModalEl);
     modal.hide();
+    const mainWrapper = document.querySelector("#mainWrapper");
+    mainWrapper.innerHTML = "";
+    renderCart();
   }
 }
 
-async function openModal() {
+function openModal() {
   const modal = new bootstrap.Modal("#ingredientsOptionModal");
   renderModal();
   modal.show();
@@ -176,8 +179,8 @@ function closeModal() {
 
   userSandwitch = [];
 
-  const sections = document.querySelectorAll("#ingredientOptionsDivId");
-  sections.forEach((section) => section.remove());
+  const optionsContainer = document.querySelector("#optionsContainer");
+  optionsContainer.innerHTML = "";
 }
 
 function renderSandwitchSize() {
@@ -321,6 +324,7 @@ async function renderOptions() {
         <button
           class="btn btn-light btnCancel"
           id="closeModalBtn"
+          onclick="closeModal()"
         >
           Cancelar
         </button>
@@ -337,6 +341,185 @@ function renderModal() {
   renderOptions();
 }
 
+function getCart() {
+  return JSON.parse(localStorage.getItem("cart"));
+}
+
+function removeItemCart(id) {
+  Swal.fire({
+    title: "Eliminar sandwitch",
+    text: "¿Seguro que quieres quitar este sandwitch de la orden?",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Si",
+    cancelButtonText: "No",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const cart = JSON.parse(localStorage.getItem("cart"));
+      cart.splice(id, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+
+      mainWrapper.innerHTML = "";
+      renderCart();
+
+      Swal.fire({
+        title: "Sandwitch eliminado",
+        text: "El sandwitch fue eliminado de tu orden",
+        icon: "success",
+      });
+    }
+  });
+}
+
+async function renderCart() {
+  const mainWrapper = document.querySelector("#mainWrapper");
+  const ingredients = await fetchData("./db/ingredients.json");
+  const cart = getCart();
+
+  if (!cart || cart.length == 0) {
+    mainWrapper.classList.add("flex-column", "align-items-center", "gap-3");
+    mainWrapper.innerHTML = `
+     <img src="./img/ingredients/big.png" style="width: 350px" />
+      <h1 class="fs-1">SandwitchMania</h1>
+      <p class="m-0 text-center fs-5">
+        En SandwichMania sabemos que tú eres un experto en sándwiches, así que
+        te dejamos que los armes como más te guste. Nuestro simulador te guiará
+        paso a paso para que elijas todos los ingredientes de tu sándwich
+        perfecto
+      </p>
+      <button
+        type="button"
+        class="btn btn-danger btn-lg fw-bold mt-3"
+        id="openModalBtn"
+      >
+        Realizar un pedido
+      </button>
+    `;
+  } else {
+    mainWrapper.classList.remove("flex-column", "align-items-center", "gap-3");
+    const leftPanel = document.createElement("div");
+    leftPanel.id = "leftPanel";
+    leftPanel.classList.add("d-flex", "left-panel");
+
+    const rightPanel = document.createElement("div");
+    rightPanel.id = "rightPanel";
+    rightPanel.classList.add("d-flex", "flex-column", "gap-3", "right-panel");
+
+    cart.map(async (sandwitch, index) => {
+      const price = await getPrice(sandwitch);
+
+      const sandwitchCard = document.createElement("div");
+      sandwitchCard.classList.add("card", "mb-3");
+      sandwitchCard.style = "max-width: 540px";
+      sandwitchCard.id = index;
+
+      sandwitchCard.innerHTML = `
+       <div class="row g-0">
+          <div
+            class="col-md-4 d-flex align-items-center justify-content-center bg-light"
+          >
+            <img
+              src="./img/ingredients/big.png"
+              class="img-fluid rounded-start"
+              style="width: 200px"
+              alt="Sandwitch image"
+            />
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h4 class="card-title">Sandwitch ${index + 1}</h4>
+              <h5 class="fs-5">Ingredientes:</h5>
+              <p class="card-text" id="ingredientList">
+              ${sandwitch
+                .map((ingID) => {
+                  const ingredient = ingredients.find((e) => e.id == ingID);
+                  return `<small>${ingredient.name}(${ingredient.category})</small><br />`;
+                })
+                .join("")}
+              </p>
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-center">
+              <p class="m-0"><span class="me-3 fw-bold">Precio del item:</span>$${price}</p>
+              <button class="btn" onClick="removeItemCart(${index})"><i class="bi bi-trash3"></i>Borrar</button>
+            </div>
+          </div>
+        </div>
+      `;
+      leftPanel.appendChild(sandwitchCard);
+    });
+
+    rightPanel.innerHTML = `
+     <table class="table table-bordered">
+      <tbody>
+          <tr>
+            <th scope="row">Precio sin impuestos</th>
+            <td id="precioSinIVA"></td>
+          </tr>
+        <tr>
+          <th scope="row">IVA(21%)</th>
+          <td id="IVA"></td>
+        </tr>
+        <tr>
+          <th scope="row">Total a pagar</th>
+          <td id="precioConIVA"></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-danger w-100" onClick="confirmOrder()">Completar Pedido</button>
+    `;
+
+    mainWrapper.appendChild(leftPanel);
+    mainWrapper.appendChild(rightPanel);
+    await renderCartFinalPrice();
+  }
+}
+
+async function getPriceCart() {
+  const cart = JSON.parse(localStorage.getItem("cart"));
+  let price = 0;
+  for (const sandwitch of cart) {
+    const sandwitchPrice = await getPrice(sandwitch);
+    price += sandwitchPrice;
+  }
+
+  return price;
+}
+
+async function renderCartFinalPrice() {
+  const priceWoIVA = document.querySelector("#precioSinIVA");
+  const IVA = document.querySelector("#IVA");
+  const priceWIVA = document.querySelector("#precioConIVA");
+
+  priceWoIVA.innerHTML = `$${(await getPriceCart()).toFixed(2)}`;
+  IVA.innerHTML = `$${((await getPriceCart()) * 0.21).toFixed(2)}`;
+  priceWIVA.innerHTML = `$${((await getPriceCart()) * 1.21).toFixed(2)}`;
+}
+
+function confirmOrder() {
+  Swal.fire({
+    title: "¿Deseas confirmar tu orden?",
+    text: "¿Estas seguro que deseas cerrar esta orden?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Si, completar pedido",
+    cancelButtonText: "Volver",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: "Confirmaste tu orden",
+        text: `El pedido #${(Math.random() * 100000).toFixed(
+          0
+        )} esta en proceso. Acercate al mostrador para pagar y disfrutar de tu sandwitch. Muchas Gracias.`,
+        icon: "success",
+      });
+    }
+  });
+}
+
 const openModalBtnGrp = document.querySelectorAll("#openModalBtn");
 openModalBtnGrp.forEach((openModalBtn) =>
   openModalBtn.addEventListener("click", openModal)
@@ -349,3 +532,6 @@ const closeModalBtnGrp = document.querySelectorAll("#closeModalBtn");
 closeModalBtnGrp.forEach((closeModalBtn) =>
   closeModalBtn.addEventListener("click", closeModal)
 );
+
+renderCart();
+getPriceCart();
