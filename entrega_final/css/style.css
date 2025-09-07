@@ -117,3 +117,22 @@ main {
 .right-panel {
   max-width: 30%;
 }
+
+.navbar-cart {
+  position: relative;
+}
+
+.cart-badge {
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: -10px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: white;
+  border-radius: 50%;
+  background-color: red;
+  width: 30px;
+  height: 30px;
+}

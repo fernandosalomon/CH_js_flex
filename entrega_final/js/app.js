@@ -45,6 +45,21 @@ function updateBadge(ingredientID) {
   }
 }
 
+function updateNavbarCartBadge() {
+  const cart = JSON.parse(localStorage.getItem("cart"));
+  const navbarCartBadge = document.querySelector("#navbarCartBadge");
+
+  if (cart && cart.length > 0) {
+    navbarCartBadge.innerText = cart.length;
+    navbarCartBadge.classList.remove("d-none");
+    navbarCartBadge.classList.add("d-flex");
+  } else {
+    navbarCartBadge.innerText = "";
+    navbarCartBadge.classList.add("d-none");
+    navbarCartBadge.classList.remove("d-flex");
+  }
+}
+
 async function addIngredient(ingredientID) {
   const ingredients = await fetchData("./db/ingredients.json");
   const category = ingredients.find((ing) => ing.id == ingredientID).category;
@@ -163,6 +178,7 @@ async function addItemToCart() {
     const mainWrapper = document.querySelector("#mainWrapper");
     mainWrapper.innerHTML = "";
     renderCart();
+    updateNavbarCartBadge();
   }
 }
 
@@ -363,6 +379,7 @@ function removeItemCart(id) {
 
       mainWrapper.innerHTML = "";
       renderCart();
+      updateNavbarCartBadge();
 
       Swal.fire({
         title: "Sandwitch eliminado",
@@ -401,7 +418,7 @@ async function renderCart() {
     mainWrapper.classList.remove("flex-column", "align-items-center", "gap-3");
     const leftPanel = document.createElement("div");
     leftPanel.id = "leftPanel";
-    leftPanel.classList.add("d-flex", "left-panel");
+    leftPanel.classList.add("d-flex", "left-panel", "flex-wrap", "gap-2");
 
     const rightPanel = document.createElement("div");
     rightPanel.id = "rightPanel";
@@ -534,4 +551,5 @@ closeModalBtnGrp.forEach((closeModalBtn) =>
 );
 
 renderCart();
+updateNavbarCartBadge();
 getPriceCart();
