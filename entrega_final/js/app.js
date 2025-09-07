@@ -416,6 +416,7 @@ async function renderCart() {
       </button>
     `;
   } else {
+    mainWrapper.classList.add("flex-md-row");
     mainWrapper.classList.remove("align-items-center", "gap-3");
     const leftPanel = document.createElement("div");
     leftPanel.id = "leftPanel";

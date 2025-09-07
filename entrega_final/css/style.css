@@ -139,7 +139,11 @@ main {
   height: 30px;
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 750px) {
+  .left-panel {
+    width: 100%;
+  }
+
   .right-panel {
     width: 100%;
     max-width: 100%;
