@@ -79,6 +79,7 @@
 
 main {
   height: calc(100vh - 96px);
+  overflow-y: scroll;
 }
 
 .modal {
@@ -115,6 +116,7 @@ main {
 }
 
 .right-panel {
+  width: 30%;
   max-width: 30%;
 }
 
@@ -135,4 +137,11 @@ main {
   background-color: red;
   width: 30px;
   height: 30px;
+}
+
+@media (max-width: 1400px) {
+  .right-panel {
+    width: 100%;
+    max-width: 100%;
+  }
 }

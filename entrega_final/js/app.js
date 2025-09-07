@@ -397,6 +397,7 @@ async function renderCart() {
 
   if (!cart || cart.length == 0) {
     mainWrapper.classList.add("flex-column", "align-items-center", "gap-3");
+    mainWrapper.classList.remove("flex-md-row");
     mainWrapper.innerHTML = `
      <img src="./img/ingredients/big.png" style="width: 350px" />
       <h1 class="fs-1">SandwitchMania</h1>
@@ -409,7 +410,7 @@ async function renderCart() {
       <button
         type="button"
         class="btn btn-danger btn-lg fw-bold mt-3"
-        id="openModalBtn"
+        onClick="openModal()"
       >
         Realizar un pedido
       </button>
@@ -418,7 +419,14 @@ async function renderCart() {
     mainWrapper.classList.remove("align-items-center", "gap-3");
     const leftPanel = document.createElement("div");
     leftPanel.id = "leftPanel";
-    leftPanel.classList.add("d-flex", "left-panel", "flex-wrap", "gap-2");
+    leftPanel.classList.add(
+      "d-flex",
+      "left-panel",
+      "flex-wrap",
+      "justify-content-center",
+      "gap-2",
+      "flex-md-row"
+    );
 
     const rightPanel = document.createElement("div");
     rightPanel.id = "rightPanel";
@@ -526,6 +534,7 @@ function confirmOrder() {
     cancelButtonText: "Volver",
   }).then((result) => {
     if (result.isConfirmed) {
+      localStorage.removeItem("cart");
       Swal.fire({
         title: "Confirmaste tu orden",
         text: `El pedido #${(Math.random() * 100000).toFixed(
@@ -533,6 +542,7 @@ function confirmOrder() {
         )} esta en proceso. Acercate al mostrador para pagar y disfrutar de tu sandwitch. Muchas Gracias.`,
         icon: "success",
       });
+      location.reload();
     }
   });
 }
@@ -552,4 +562,3 @@ closeModalBtnGrp.forEach((closeModalBtn) =>
 
 renderCart();
 updateNavbarCartBadge();
-getPriceCart();
