@@ -71,6 +71,7 @@ async function removeIngredient(ingredientID) {
   if (ingredientIndex != -1) {
     userSandwitch.splice(ingredientIndex, 1);
     updateBadge(ingredientID);
+    updatePrice();
     toggleAddBtn(ingredientID);
     toggleRemoveBtn(ingredientID);
 
@@ -164,7 +165,7 @@ async function addItemToCart() {
 
 async function openModal() {
   const modal = new bootstrap.Modal("#ingredientsOptionModal");
-  await renderModal();
+  renderModal();
   modal.show();
 }
 
@@ -179,7 +180,58 @@ function closeModal() {
   sections.forEach((section) => section.remove());
 }
 
-async function renderModal() {
+function renderSandwitchSize() {
+  const optionContainer = document.querySelector("#optionsContainer");
+
+  const sandwitchSizeWrapper = document.createElement("div");
+  sandwitchSizeWrapper.id = "sandwitchSize";
+  sandwitchSizeWrapper.classList.add("container");
+  sandwitchSizeWrapper.innerHTML = `
+    <h4 class="fs-4 my-3">Elige el tamaño de tu sandwitch:</h4>
+    <div class="d-flex align-items-center justify-content-center gap-3">
+      <div id="sizeNormal" class="d-flex flex-column align-items-center size-btn">
+        <img src="./img/ingredients/normal.png" alt="Tamaño Normal" style="height: 140px"/>
+        <h4>Normal</h4>
+      </div>
+
+      <div id="sizeBig" class="d-flex flex-column align-items-center size-btn">
+        <img src="./img/ingredients/big.png" alt="Tamaño Grande" style="height: 140px"/>
+        <h4>Grande</h4>  
+      </div>
+    </div>
+    `;
+  optionContainer.appendChild(sandwitchSizeWrapper);
+
+  const sizeNormal = document.querySelector("#sizeNormal");
+  sizeNormal.classList.add("size-btn_selected");
+  const sizeBig = document.querySelector("#sizeBig");
+
+  sizeNormal.addEventListener("click", () => {
+    size = 0;
+    sizeNormal.classList.add("size-btn_selected");
+    sizeBig.classList.remove("size-btn_selected");
+
+    const ingredientOptionsDivId = document.querySelectorAll(
+      "#ingredientOptionsDivId"
+    );
+    ingredientOptionsDivId.forEach((ingOpt) => ingOpt.remove());
+    renderOptions();
+  });
+
+  sizeBig.addEventListener("click", () => {
+    size = 1;
+    sizeNormal.classList.remove("size-btn_selected");
+    sizeBig.classList.add("size-btn_selected");
+
+    const ingredientOptionsDivId = document.querySelectorAll(
+      "#ingredientOptionsDivId"
+    );
+    ingredientOptionsDivId.forEach((ingOpt) => ingOpt.remove());
+    renderOptions();
+  });
+}
+
+async function renderOptions() {
   try {
     const options = await fetchData("./db/options.json");
     if (!options) {
@@ -197,41 +249,6 @@ async function renderModal() {
 
     const optionContainer = document.querySelector("#optionsContainer");
 
-    const sandwitchSizeWrapper = document.createElement("div");
-    sandwitchSizeWrapper.id = "sandwitchSize";
-    sandwitchSizeWrapper.classList.add("container");
-    sandwitchSizeWrapper.innerHTML = `
-    <h4 class="fs-4 my-3">Elige el tamaño de tu sandwitch:</h4>
-    <div class="d-flex align-items-center justify-content-center gap-3">
-      <div id="sizeNormal" class="d-flex flex-column align-items-center size-btn">
-        <img src="./img/ingredients/normal.png" alt="Tamaño Normal" style="height: 140px"/>
-        <h4>Normal</h4>
-      </div>
-
-      <div id="sizeBig" class="d-flex flex-column align-items-center size-btn">
-        <img src="./img/ingredients/big.png" alt="Tamaño Grande" style="height: 140px"/>
-        <h4>Grande</h4>  
-      </div>
-    </div>
-    `;
-    optionContainer.appendChild(sandwitchSizeWrapper);
-
-    const sizeNormal = document.querySelector("#sizeNormal");
-    sizeNormal.classList.add("size-btn_selected");
-    const sizeBig = document.querySelector("#sizeBig");
-
-    sizeNormal.addEventListener("click", () => {
-      size = 0;
-      sizeNormal.classList.add("size-btn_selected");
-      sizeBig.classList.remove("size-btn_selected");
-    });
-
-    sizeBig.addEventListener("click", () => {
-      size = 1;
-      sizeNormal.classList.remove("size-btn_selected");
-      sizeBig.classList.add("size-btn_selected");
-    });
-
     for (const [key, value] of Object.entries(options)) {
       const section = document.createElement("div");
       section.id = "ingredientOptionsDivId";
@@ -241,7 +258,7 @@ async function renderModal() {
       title.id = "sectionTitle";
       title.innerText = `
       Elegí tu/s opcion/es de ${key} (Puedes elegir hasta ${
-        value.maxAmountToChoose[sandwitchSize == 0 ? "normal" : "big"]
+        value.maxAmountToChoose[size == 0 ? "normal" : "big"]
       } opcion/es)
       `;
       section.appendChild(title);
@@ -313,6 +330,11 @@ async function renderModal() {
   } catch (error) {
     console.error("Error: ", error);
   }
+}
+
+function renderModal() {
+  renderSandwitchSize();
+  renderOptions();
 }
 
 const openModalBtnGrp = document.querySelectorAll("#openModalBtn");
